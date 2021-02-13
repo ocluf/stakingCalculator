@@ -70,7 +70,16 @@ const Calculator = () => {
           calculate
         </Button>
       </form>
-      <Chart parameters={chartParams}></Chart>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "600px",
+          height: "300px",
+          marginLeft: "-25px",
+        }}
+      >
+        <Chart parameters={chartParams}></Chart>
+      </div>
     </div>
   )
 }

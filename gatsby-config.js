@@ -6,8 +6,5 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: [
-    `gatsby-plugin-material-ui`,
-    "gatsby-transformer-typescript-css-modules",
-  ],
+  plugins: [`gatsby-plugin-material-ui`],
 }
