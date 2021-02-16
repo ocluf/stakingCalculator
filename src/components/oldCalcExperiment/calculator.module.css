@@ -1,0 +1,29 @@
+@media only screen and (min-width: 600px) {
+  .calculator {
+    margin: 3rem auto;
+    max-width: 1000px;
+    display: flex;
+  }
+
+  .inputFields {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .inputFields {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calculator {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .chart {
+    width: "auto";
+    height: "300px";
+  }
+}
