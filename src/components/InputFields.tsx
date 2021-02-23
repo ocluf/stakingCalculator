@@ -13,7 +13,7 @@ const InputFields = () => {
   // standard fields
   const [stakeSize, setStake]: [string, Function] = useState("")
   const [lockupPeriod, setPeriod]: [string, Function] = useState("")
-  const [timeUnit, setTimeUnit]: [string, Function] = useState("YEAR")
+  const [timeUnit, setTimeUnit]: [TimeUnit, Function] = useState("YEAR")
   const [votingPerc, setVotingPerc]: [string, Function] = useState("")
 
   // add calendar field for starting date
