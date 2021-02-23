@@ -1,4 +1,3 @@
-import "../css/index.css"
 import logo from "../../static/logo.svg"
 import React from "react"
 

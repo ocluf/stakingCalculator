@@ -1,4 +1,3 @@
-import "../css/index.css"
 import React from "react"
 
 const Header = () => {
