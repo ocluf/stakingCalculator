@@ -1,5 +1,5 @@
 {
-  "name": "dfinity staking calculator",
+  "name": "dfinity-staking-calculator",
   "private": true,
   "description": "A neuron staking calculator",
   "version": "0.1.0",
