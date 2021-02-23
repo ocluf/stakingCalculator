@@ -96,6 +96,7 @@ const InputFields = () => {
             aria-labelledby="lockup-period"
           />
         </div>
+
         <div className="flex flex-col space-y-3 pb-11">
           <div className="flex justify-center text-xl font-light">
             You can earn a daily return of up to
@@ -108,9 +109,9 @@ const InputFields = () => {
         <div className="">
           Neurons on the Internet Computer are active participants in the network's governance system, with votes placed on proposals or delegated to others. The more you participate, the higher your rewards.
         </div>
-          <div>
-            % of votes participated in:
-          </div>
+        <div>
+          % of votes participated in:
+        </div>
         <div>
           <Slider 
             id="voting percentage"
