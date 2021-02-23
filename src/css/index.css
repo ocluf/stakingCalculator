@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 
+    Put global styles under @layer base
+
+    "By using the @layer directive, Tailwind will automatically move these styles 
+    to the same place as tailwind base to avoid unintended specificity issues.
+    Using the @layer directive will also instruct Tailwind to consider those styles 
+    for purging when purging the base layer."
+    https://tailwindcss.com/docs/adding-base-styles
+*/
+@layer base {
+    body {
+		@apply font-sans;
+	}
+	h1 {
+	}
+}

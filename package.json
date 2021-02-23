@@ -11,7 +11,9 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "tailwind:dev": "tailwind build src/css/index.css -o src/css/bundle.css",
+    "tailwind:build": "NODE_ENV=production tailwind build src/css/index.css -o src/css/bundle.css"
   },
   "dependencies": {
     "@danbruegge/gatsby-plugin-stylelint": "^4.1.0",
