@@ -6,6 +6,7 @@ const genesis = new Date(2021, 3, 31)
 
 const daysSinceGenesis = (date: Date) => {
   let difference = date.getTime() - genesis.getTime()
+  difference = Math.max(0, difference)
   return Math.ceil(difference / (1000 * 3600 * 24))
 }
 
