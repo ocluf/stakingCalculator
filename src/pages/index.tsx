@@ -1,7 +1,7 @@
 import React from "react"
 import Banner from "../components/Banner"
 import InputFields from "../components/InputFields"
-import "../css/bundle.css"
+import "../css/index.css"
 
 export default function Home() {
   return (
