@@ -1,7 +1,8 @@
+import "../css/index.css"
 import React from "react"
 import Banner from "../components/Banner"
 import InputFields from "../components/InputFields"
-import "../css/index.css"
+import ResponsiveLine from "../components/Chart"
 
 export default function Home() {
   return (
@@ -10,11 +11,9 @@ export default function Home() {
       <div className="flex m-5">
         <InputFields />
 
-        {/* temp graph element */}
         <div className="flex-1 w-1/3 border border-gray-300 bg-gray-100 mx-8">
-          Rewards graph  __/
+          <ResponsiveLine />
         </div>
-
       </div>
     </div>
   )
