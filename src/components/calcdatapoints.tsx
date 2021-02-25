@@ -16,7 +16,7 @@ const rewardFraction = (daysSinceGenesis: number) => {
 
 const createDataPoints = (params: CalculatorParameters) => {
   const daysPastGenesis = daysSinceGenesis(params.startDate)
-  const totalDaysStaked: number = params.lockupPeriod * 365
+  const totalDaysStaked: number = Math.ceil(params.lockupPeriod * 365)
   const totalSupply: number = params.totalSupply ? params.totalSupply : STANDARD_TOTAL_SUPPLY
   const totalStakePerc: number = params.stakedPerc ? params.stakedPerc : STANDARD_PERCENTAGE_STAKED
   const votingPerc: number = params.votingPerc ? params.votingPerc : STANDARD_VOTING_PERCENTAGE
@@ -28,14 +28,18 @@ const createDataPoints = (params: CalculatorParameters) => {
     const totalDailyReward: number = rewardFraction(daysPastGenesis + days) * totalSupply
     const personalDailyReward: number = totalDailyReward * (1 / 365) * relativeStakePerc * votingPerc
     cumulativeReward = cumulativeReward + personalDailyReward
-    const datapoint = {
-      x: days,
-      y: cumulativeReward, // should account for maturity somehow as well
-    }
 
-    const modulo = Math.ceil(totalDaysStaked / NR_OFF_DATA_POINTS)
-    if (days % modulo === 0) {
-      datapoints.push(datapoint)
+    if (days + 1 === totalDaysStaked) {
+      datapoints.push({
+        x: "release",
+        y: cumulativeReward, // should account for maturity somehow as well
+      })
+    }
+    if (days % 365 === 0) {
+      datapoints.push({
+        x: days / 365 === 0 ? "creation" : "year " + days / 365,
+        y: cumulativeReward,
+      })
     }
   }
 

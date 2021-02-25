@@ -77,7 +77,8 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         title={"With a dissolve period of:"}
         percentage={lockupPeriod}
         setPerc={setPeriod}
-        postfix={lockupPeriod > 1 ? "years" : "year"}
+        postfix={lockupPeriod > 1 ? " years" : " year"}
+        min={0.3}
         max={8}
         step={0.1}
         defaulValue={5}
@@ -89,6 +90,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           setPerc={setVotingPerc}
           postfix="%"
           max={100}
+          min={0}
           step={1}
           defaulValue={100}
         />
@@ -98,6 +100,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           setPerc={setStakePerc}
           postfix="%"
           defaulValue={90}
+          min={1}
           max={100}
           step={1}
         />
@@ -117,17 +120,6 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           aria-labelledby="stake-size"
         ></TextField>
       </AdvancedSettings>
-      {/** 
-        <div className="flex flex-col space-y-3 pb-11">
-          <div className="flex justify-center text-xl font-light">You can earn a daily return of up to</div>
-          <div className="flex justify-center text-2xl">Some tokens</div>
-        </div>
-
-        <div className="">
-          Neurons on the Internet Computer are active participants in the network's governance system, with votes placed
-          on proposals or delegated to others. The more you participate, the higher your rewards.
-        </div>
-        */}
       <Button variant="contained" color="primary" onClick={handleCalculate}>
         Calculate
       </Button>

@@ -30,9 +30,9 @@ const Chart = (props: { data }) => {
           orient: "bottom",
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
-          legend: "days staked",
-          legendOffset: 36,
+          tickRotation: 30,
+          legend: "time",
+          legendOffset: 40,
           legendPosition: "middle",
         }}
         axisLeft={{
@@ -44,11 +44,12 @@ const Chart = (props: { data }) => {
           legendOffset: -40,
           legendPosition: "middle",
         }}
-        pointSize={10}
-        pointColor={{ theme: "background" }}
+        pointSize={13}
+        pointColor="inherit"
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
+        lineWidth={4}
         useMesh={true}
       />
     </div>

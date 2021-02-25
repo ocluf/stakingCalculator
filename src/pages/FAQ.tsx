@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 
 const FAQ = () => {
   return (
-    <div className="max-w-4xl m-auto mt-11">
+    <div className="p-5 m-auto max-w-xl justify-center mt-11">
       <div className="text-center text-4xl mb-5"> Frequently Asked Questions</div>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
