@@ -4,7 +4,7 @@ import Header from "./Header"
 
 const Banner = () => {
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="flex flex-wrap justify-center mt-5">
       <Logo />
       <Header />
     </div>
