@@ -1,7 +1,7 @@
 import "../css/index.css"
 import React, { useState } from "react"
 import Banner from "../components/Banner"
-import InputFields from "../components/InputFields"
+import InputFields from "../components/inputFields/InputFields"
 import Chart from "../components/Chart"
 import createDataPoints from "../components/calcdatapoints"
 
@@ -10,17 +10,16 @@ export default function Home() {
 
   const setCalcParams = (calcParams: CalculatorParameters) => {
     const data = createDataPoints(calcParams)
-    console.log("test")
     setChartData(data)
   }
 
   return (
     <div className="font-sans w-full">
       <Banner />
-      <div className="flex m-5">
+      <div className="flex flex-wrap m-5 justify-center">
         <InputFields calculate={setCalcParams} />
 
-        <div className="flex-1 w-1/3 border border-gray-300 bg-gray-100 mx-8">
+        <div className="flex-1 min-w-1 w-11/12 h-96	 border border-gray-300 mx-8 max-w-screen-sm m-5">
           <Chart data={chartData} />
         </div>
       </div>

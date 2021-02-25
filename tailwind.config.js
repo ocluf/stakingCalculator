@@ -6,6 +6,9 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   theme: {
+    minWidth: {
+      '1': '400px',
+    },
     extend: {},
   },
   variants: {

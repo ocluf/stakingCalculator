@@ -43,8 +43,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
   }
 
   return (
-    <form className="flex flex-col space-y-4 max-w-sm m-8 p-5">
-      <div className="">If you deposit this many ICP tokens in your neuron:</div>
+    <form className="flex flex-shrink-0 flex-col space-y-4 w-96 m-5">
       <TextField
         required={true}
         id="ICP_Amount"
@@ -59,7 +58,6 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         onChange={e => setStake(e.target.value)}
         aria-labelledby="stake-size"
       ></TextField>
-      <div>neuron start date (min = 31 march 2021)</div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           disableToolbar
@@ -67,7 +65,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="Starting date"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
