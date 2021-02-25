@@ -1,10 +1,14 @@
 import React from "react"
 import { ResponsiveLine } from "@nivo/line"
 
+const tooltip = input => {
+  return <div className="bg-white border-black border-2 p-1 rounded-xl">{input.point.data.yFormatted} ICP</div>
+}
+
 const Chart = (props: { data }) => {
   const chartData = [
     {
-      id: "reward",
+      id: "return",
       color: "hsl(56, 70%, 50%)",
       data: props.data,
     },
@@ -14,6 +18,7 @@ const Chart = (props: { data }) => {
     <div className="w-full h-full">
       <ResponsiveLine
         data={chartData}
+        tooltip={tooltip}
         margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
         xScale={{ type: "point" }}
         yScale={{
@@ -40,7 +45,7 @@ const Chart = (props: { data }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "total reward",
+          legend: "total return",
           legendOffset: -40,
           legendPosition: "middle",
         }}
