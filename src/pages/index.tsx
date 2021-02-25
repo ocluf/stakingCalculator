@@ -2,7 +2,6 @@ import "../css/index.css"
 import React, { useState } from "react"
 import Banner from "../components/Banner"
 import InputFields from "../components/InputFields"
-import ResponsiveLine from "../components/Chart"
 import Chart from "../components/Chart"
 import createDataPoints from "../components/calcdatapoints"
 

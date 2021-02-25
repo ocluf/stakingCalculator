@@ -1,10 +1,5 @@
 import React from "react"
-import createDataPoints from "../components/calcdatapoints"
 import { ResponsiveLine } from "@nivo/line"
-
-//let testdata2 = testdata.map(e => (e.x = e.x.toString()))
-//testdata2 = testdata2.filter(e => typeof e.y === "number")
-//console.log(testdata)
 
 const Chart = (props: { data }) => {
   const chartData = [
