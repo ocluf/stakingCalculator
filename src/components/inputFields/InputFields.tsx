@@ -5,7 +5,8 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/picker
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import InputAdornment from "@material-ui/core/InputAdornment"
-import PercentageSlider from "./inputFields/PercentageSlider"
+import PercentageSlider from "./PercentageSlider"
+import AdvancedSettings from "./AdvancedSettings"
 
 const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) => {
   // standard fields
@@ -83,70 +84,41 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         step={0.1}
         defaulValue={5}
       />
-      {/** 
-      <div>
-        <div className="flex">
-          <span className="flex-1">With a dissolve period of:</span>
-          <span className="flex">
-            {lockupPeriod} year{lockupPeriod != 1 ? "s" : ""}
-          </span>
-        </div>
-      </div>
-      <div>
-        <Slider
-          id="lockup_period"
-          defaultValue={5}
-          min={0}
-          max={8}
-          step={0.1}
-          value={lockupPeriod}
-          onChange={(e, value) => setPeriod(value)}
-          aria-labelledby="lockup-period"
+      <AdvancedSettings open={open} handleExpand={handleExpand}>
+        <PercentageSlider
+          title="percentage of votes participated in:"
+          percentage={votingPerc}
+          setPerc={setVotingPerc}
+          postfix="%"
+          max={100}
+          step={1}
+          defaulValue={100}
         />
-      </div>
-      */}
-      <div className="flex w-full" onClick={handleExpand}>
-        Advanced settings
-        <div className="ml-2">{open ? <ExpandLess /> : <ExpandMore />}</div>
-      </div>
-
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <div className="flex flex-col w-full space-y-4">
-          <PercentageSlider
-            title="percentage of votes participated in:"
-            percentage={votingPerc}
-            setPerc={setVotingPerc}
-            postfix="%"
-            max={100}
-            step={1}
-            defaulValue={100}
-          />
-          <PercentageSlider
-            title="percentage of total supply staked:"
-            percentage={stakePerc}
-            setPerc={setStakePerc}
-            postfix="%"
-            defaulValue={90}
-            max={100}
-            step={1}
-          />
-          <div>for now assumed constant total supply:</div>
-          <TextField
-            required={true}
-            id="total supply"
-            label="total supply"
-            value={totalSupply}
-            variant="outlined"
-            placeholder="total number of tokens"
-            type="number"
-            InputProps={{
-              endAdornment: <InputAdornment position="end">ICP</InputAdornment>,
-            }}
-            onChange={e => setTotalSupply(e.target.value)}
-            aria-labelledby="stake-size"
-          ></TextField>
-        </div>
-      </Collapse>
+        <PercentageSlider
+          title="percentage of total supply staked:"
+          percentage={stakePerc}
+          setPerc={setStakePerc}
+          postfix="%"
+          defaulValue={90}
+          max={100}
+          step={1}
+        />
+        <div>for now assumed constant total supply:</div>
+        <TextField
+          required={true}
+          id="total supply"
+          label="total supply"
+          value={totalSupply}
+          variant="outlined"
+          placeholder="total number of tokens"
+          type="number"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">ICP</InputAdornment>,
+          }}
+          onChange={e => setTotalSupply(e.target.value)}
+          aria-labelledby="stake-size"
+        ></TextField>
+      </AdvancedSettings>
       {/** 
         <div className="flex flex-col space-y-3 pb-11">
           <div className="flex justify-center text-xl font-light">You can earn a daily return of up to</div>
