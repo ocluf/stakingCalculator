@@ -2,7 +2,7 @@ import "../css/index.css"
 import React, { useState } from "react"
 import Banner from "../components/Banner"
 import InputFields from "../components/inputFields/InputFields"
-import Chart from "../components/Chart"
+import Chart from "../components/chart"
 import createDataPoints from "../components/calcdatapoints"
 
 export default function Home() {
