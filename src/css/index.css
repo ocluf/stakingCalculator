@@ -12,9 +12,12 @@
     https://tailwindcss.com/docs/adding-base-styles
 */
 @layer base {
-    body {
-		@apply font-sans;
-	}
-	h1 {
-	}
+  html,
+  body {
+    @apply font-sans overflow-x-hidden max-w-full;
+  }
+
+  body {
+    @apply relative;
+  }
 }

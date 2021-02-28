@@ -6,7 +6,7 @@ import React from "react"
 const AdvancedSettings = (props: { children: React.ReactNode; open: boolean; handleExpand: Function }) => {
   return (
     <div>
-      <div className="flex w-full mb-4" onClick={() => props.handleExpand()}>
+      <div className="flex w-full mb-5" onClick={() => props.handleExpand()}>
         Advanced settings
         <div className="ml-2">{props.open ? <ExpandLess /> : <ExpandMore />}</div>
       </div>

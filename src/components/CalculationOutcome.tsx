@@ -6,7 +6,7 @@ const CalculationOutcome = (props: { calcParams: CalculatorParameters | null; re
   return (
     <>
       {props.calcParams ? (
-        <Card className="p-7 m-6">
+        <Card className="p-7">
           After <span className="font-bold">{props.calcParams?.lockupPeriod} years</span> with a stake of
           <span className="font-bold"> {props.calcParams?.stakeSize} ICP </span>your total return would be
           <span className="font-bold"> {props.reward} ICP</span> <br></br>

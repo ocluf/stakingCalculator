@@ -17,16 +17,14 @@ export default function Home() {
   }
 
   return (
-    <div className="font-sans w-full">
+    <div className="flex flex-col p-3 space-y-2 max-w-lg mx-auto">
       <Banner />
-      <div className="flex flex-wrap m-5 justify-center">
-        <InputFields calculate={setCalcParams} />
+      <InputFields calculate={setCalcParams} />
 
-        <div className="flex-1 min-w-1 w-11/12 h-96	 border border-gray-300 mx-8 max-w-screen-sm m-5">
-          <Chart data={chartData} />
-        </div>
-        <CalculationOutcome calcParams={calcParameters} reward={chartData.slice(-1)[0].y.toFixed(2)} />
+      <div className="border border-gray-300 w-full h-96">
+        <Chart data={chartData} />
       </div>
+      <CalculationOutcome calcParams={calcParameters} reward={chartData.slice(-1)[0].y.toFixed(2)} />
     </div>
   )
 }

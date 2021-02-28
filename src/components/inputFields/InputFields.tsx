@@ -40,10 +40,11 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       votingPerc: votingPerc / 100,
       totalSupply: parseInt(totalSupply),
     })
+    window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: "smooth" })
   }
 
   return (
-    <form className="flex flex-shrink-0 flex-col space-y-4 w-96 m-5">
+    <form className="flex flex-shrink-0 flex-col space-y-4">
       <TextField
         required={true}
         id="ICP_Amount"
