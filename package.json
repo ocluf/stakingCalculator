@@ -28,6 +28,7 @@
     "gatsby-transformer-typescript-css-modules": "^1.0.14",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-number-format": "^4.4.4",
     "recharts": "^2.0.4",
     "sass": "^1.32.8"
   },

@@ -7,8 +7,8 @@ const CalculationOutcome = (props: { calcParams: CalculatorParameters | null; re
     <>
       {props.calcParams ? (
         <Card className="p-7">
-          After <span className="font-bold">{props.calcParams?.lockupPeriod} years</span> with a stake of
-          <span className="font-bold"> {props.calcParams?.stakeSize} ICP </span>your total return would be
+          After <span className="font-bold">{props.calcParams?.lockupPeriod} years</span>, with a stake of
+          <span className="font-bold"> {props.calcParams?.stakeSize} ICP</span>, your total return would be
           <span className="font-bold"> {props.reward} ICP</span> <br></br>
           <br></br>
           <span className="text-sm text-gray-500">

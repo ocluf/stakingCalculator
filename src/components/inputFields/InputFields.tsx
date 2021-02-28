@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react"
 import { TextField, Slider, Collapse, Button } from "@material-ui/core"
 import DateFnsUtils from "@date-io/date-fns"
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers"
-import ExpandMore from "@material-ui/icons/ExpandMore"
-import ExpandLess from "@material-ui/icons/ExpandLess"
+import NumberFormat from "react-number-format"
 import InputAdornment from "@material-ui/core/InputAdornment"
 import PercentageSlider from "./PercentageSlider"
 import AdvancedSettings from "./AdvancedSettings"
+import { CalculatorParameters, NumberFormatCustomProps } from "../../types/types"
+import FormattedTextInput from "./FormattedTextInput"
 
 const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) => {
   // standard fields
@@ -15,7 +16,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
   const [lockupPeriod, setPeriod]: [number, Function] = useState(5.0)
   const [votingPerc, setVotingPerc]: [number, Function] = useState(100)
   const [stakePerc, setStakePerc]: [number, Function] = useState(90)
-  const [totalSupply, setTotalSupply]: [string, Function] = useState("476190476")
+  const [totalSupply, setTotalSupply]: [string, Function] = useState("476,190,476")
 
   // advanced settings collapse
   const [open, setOpen] = useState(false)
@@ -33,7 +34,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
   const handleCalculate = () => {
     props.calculate({
-      stakeSize: parseInt(stakeSize),
+      stakeSize: parseInt(stakeSize.replace(",", "")),
       startDate: selectedDate,
       lockupPeriod: lockupPeriod,
       stakedPerc: stakePerc / 100,
@@ -44,20 +45,15 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
   return (
     <form className="flex flex-shrink-0 flex-col space-y-4">
-      <TextField
-        required={true}
+      <FormattedTextInput
         id="ICP_Amount"
         label="stake size"
-        value={stakeSize}
         variant="outlined"
-        placeholder="99"
+        value={stakeSize}
         type="number"
-        InputProps={{
-          endAdornment: <InputAdornment position="end">ICP</InputAdornment>,
-        }}
+        placeholder="The number of ICP in the neuron"
         onChange={e => setStake(e.target.value)}
-        aria-labelledby="stake-size"
-      ></TextField>
+      />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           disableToolbar
@@ -95,7 +91,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           defaulValue={100}
         />
         <PercentageSlider
-          title="percentage of total supply staked:"
+          title="percentage locked inside voting neurons:"
           percentage={stakePerc}
           setPerc={setStakePerc}
           postfix="%"
@@ -105,20 +101,16 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           step={1}
         />
         <div>for now assumed constant total supply:</div>
-        <TextField
+        <FormattedTextInput
           required={true}
-          id="total supply"
+          id="total supplyasd"
           label="total supply"
           value={totalSupply}
-          variant="outlined"
           placeholder="total number of tokens"
           type="number"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">ICP</InputAdornment>,
-          }}
           onChange={e => setTotalSupply(e.target.value)}
           aria-labelledby="stake-size"
-        ></TextField>
+        ></FormattedTextInput>
       </AdvancedSettings>
       <Button
         variant="contained"
