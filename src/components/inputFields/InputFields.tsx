@@ -40,7 +40,6 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       votingPerc: votingPerc / 100,
       totalSupply: parseInt(totalSupply),
     })
-    window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: "smooth" })
   }
 
   return (
@@ -121,7 +120,14 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           aria-labelledby="stake-size"
         ></TextField>
       </AdvancedSettings>
-      <Button variant="contained" color="primary" onClick={handleCalculate}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          handleCalculate()
+          window.scrollTo({ top: document.body.scrollHeight, left: 0, behavior: "smooth" })
+        }}
+      >
         Calculate
       </Button>
     </form>
