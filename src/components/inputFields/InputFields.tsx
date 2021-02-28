@@ -22,6 +22,12 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
     setOpen(!open)
   }
 
+  // toggle description visibility
+  const [showDescriptions, setShowDescriptions] = useState(true)
+  const handleDescriptionToggle = () => {
+    setShowDescriptions(!showDescriptions)
+  }
+
   const handleDateChange = date => {
     setSelectedDate(date)
   }
@@ -54,8 +60,9 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       {/* Simple options */}
 
       {/* stake size */}
-      {/* <div className="">If you deposit this many ICP tokens in your neuron:</div> */}
-      <div className="">The graph shows the potential returns you could expect if you deposit this many ICP tokens in your neuron:</div>
+      {/*if*/ showDescriptions &&
+        <div className="">The graph shows the potential returns you could expect if you deposit this many ICP tokens in your neuron:</div>
+      }
       <TextField
         required={true}
         id="ICP_Amount"
@@ -73,7 +80,9 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
       {/* starting date */}
       <div>
-        <div className="">On this date:</div>
+        {/*if*/ showDescriptions && 
+          <div className="">On this date:</div>
+        }
         <div className="flex flex-shrink-0 flex-col">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
@@ -95,7 +104,11 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
       {/* dissolve period */}
       <div className="flex">
-        <span className="flex-1">With a dissolve period of:</span>
+        {/*if*/ showDescriptions ? 
+          <span className="flex-1">With a dissolve period of:</span>
+        /*else*/: 
+          <span className="flex-1">Dissolve period:</span> 
+        }
         <span className="flex">{lockupPeriod} year{lockupPeriod!=1?"s":""}</span>
       </div>
       <div>
@@ -111,10 +124,12 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         />
       </div>
 
-      <div className="">
-        Neurons on the Internet Computer are active participants in the network's governance system, 
-        with votes placed on proposals or delegated to others. The more you participate, the higher your rewards.
-      </div>
+      {/*if*/ showDescriptions && 
+        <div className="">
+          Neurons on the Internet Computer are active participants in the network's governance system, 
+          with votes placed on proposals or delegated to others. The more you participate, the higher your rewards.
+        </div>
+      }
       <div>
         Vote participation:
       </div>
@@ -146,23 +161,27 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
       <div className="flex justify-end w-full mb-4 text-blue-500 cursor-pointer" onClick={() => handleExpand()}>
         Advanced settings
-        <div className="ml-2">{open ? <ExpandLess /> : <ExpandMore />}</div>
+        <div className="">{open ? <ExpandLess /> : <ExpandMore />}</div>
       </div>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <div className="flex flex-col w-full space-y-4">
-          <div className="text-sm mb-2">
-            These settings are for advanced users interested in exploring the effect of global network parameters. 
-            They are not part of your neuron's settings.
-          </div>
+          {/*if*/ showDescriptions && 
+            <div className="text-sm mb-2">
+              These settings are for advanced users interested in exploring the effect of global network parameters. 
+              They are not part of your neuron's settings.
+            </div> 
+          }
 
           {/* total ICP supply */}
           <div>
             <div>Total token supply:</div>
-            <div className="text-sm">
-              The global token supply is determined by the network as a whole, but you can explore the effect of changing 
-              the total supply by adjusting this parameter. 
-            </div>
+            {/*if*/ showDescriptions && 
+              <div className="text-sm">
+                The global token supply is determined by the network as a whole, but you can explore the effect of changing 
+                the total supply by adjusting this parameter. 
+              </div> 
+            }
           </div>
           <TextField
             required={true}
@@ -181,12 +200,14 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           <sup className="text-gray-400">* assumed constant total supply over time, for now</sup>
 
           {/* % of total supply staked in neurons */}
-          <div className="flex flex-col">
-            <div>Percentage of total supply staked in neurons:</div>
-            <div className="text-sm">
-              Fewer participants mean higher rewards.            
+          {/*if*/ showDescriptions && 
+            <div className="flex flex-col">
+              <div>Percentage of total supply staked in neurons:</div>
+              <div className="text-sm">
+                Fewer participants mean higher rewards.            
+              </div>
             </div>
-          </div>
+          }
           <PercentageSlider
             title="% of network tokens staked in neurons:"
             percentage={stakePerc}
@@ -203,6 +224,12 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       <Button variant="contained" color="primary" onClick={handleCalculate}>
         Calculate
       </Button>
+
+      <div className="flex justify-end w-full mb-4 pr-2 text-gray-400 cursor-pointer" 
+           onClick={() => handleDescriptionToggle()}>
+          {showDescriptions ? <span>hide help (compact mode)</span> : <span>show help</span>}
+      </div>
+
     </form>
   )
 }
