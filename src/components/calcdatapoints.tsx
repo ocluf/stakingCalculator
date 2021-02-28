@@ -1,4 +1,5 @@
-const NR_OFF_DATA_POINTS = 10
+import { CalculatorParameters } from "../types/types"
+
 const STANDARD_TOTAL_SUPPLY = 1000000
 const STANDARD_PERCENTAGE_STAKED = 0.9
 const STANDARD_VOTING_PERCENTAGE = 1

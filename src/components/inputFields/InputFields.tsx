@@ -34,12 +34,12 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
 
   const handleCalculate = () => {
     props.calculate({
-      stakeSize: parseInt(stakeSize.replace(",", "")),
+      stakeSize: parseInt(stakeSize.replace(/,/g, "")),
       startDate: selectedDate,
       lockupPeriod: lockupPeriod,
       stakedPerc: stakePerc / 100,
       votingPerc: votingPerc / 100,
-      totalSupply: parseInt(totalSupply),
+      totalSupply: parseInt(totalSupply.replace(/,/g, "")),
     })
   }
 
