@@ -9,14 +9,30 @@ import AdvancedSettings from "./AdvancedSettings"
 import { CalculatorParameters, NumberFormatCustomProps } from "../../types/types"
 import FormattedTextInput from "./FormattedTextInput"
 
-const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) => {
-  // standard fields
-  const [stakeSize, setStake]: [string, Function] = useState("100")
-  const [selectedDate, setSelectedDate]: [Date, Function] = useState(new Date("2021-03-31"))
-  const [lockupPeriod, setPeriod]: [number, Function] = useState(5.0)
-  const [votingPerc, setVotingPerc]: [number, Function] = useState(100)
-  const [stakePerc, setStakePerc]: [number, Function] = useState(90)
-  const [totalSupply, setTotalSupply]: [string, Function] = useState("476,190,476")
+const InputFields = (props: { calcParams: CalculatorParameters; calculate: (x: CalculatorParameters) => void }) => {
+  const [calcParams, setCalcParams]: [CalculatorParameters, Function] = useState(props.calcParams)
+
+  const setStakeSize = (value: string) => {
+    const newStakeSize = parseInt(value.replace(/,/g, ""))
+    setCalcParams({ ...calcParams, stakeSize: newStakeSize })
+  }
+
+  const setLockupPeriod = (value: number) => {
+    setCalcParams({ ...calcParams, lockupPeriod: value })
+  }
+
+  const setTotalSupply = (value: string) => {
+    const newStakeSize = parseInt(value.replace(/,/g, ""))
+    setCalcParams({ ...calcParams, totalSupply: newStakeSize })
+  }
+
+  const setVotingPerc = (value: number) => {
+    setCalcParams({ ...calcParams, votingPerc: value })
+  }
+
+  const setStakedPerc = (value: number) => {
+    setCalcParams({ ...calcParams, stakedPerc: value })
+  }
 
   // advanced settings collapse
   const [open, setOpen] = useState(false)
@@ -24,23 +40,12 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
     setOpen(!open)
   }
 
-  const handleDateChange = date => {
-    setSelectedDate(date)
-  }
-
   useEffect(() => {
     handleCalculate()
   }, [])
 
   const handleCalculate = () => {
-    props.calculate({
-      stakeSize: parseInt(stakeSize.replace(/,/g, "")),
-      startDate: selectedDate,
-      lockupPeriod: lockupPeriod,
-      stakedPerc: stakePerc / 100,
-      votingPerc: votingPerc / 100,
-      totalSupply: parseInt(totalSupply.replace(/,/g, "")),
-    })
+    props.calculate(calcParams)
   }
 
   return (
@@ -49,10 +54,10 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         id="ICP_Amount"
         label="stake size"
         variant="outlined"
-        value={stakeSize}
+        value={calcParams.stakeSize.toString()}
         type="number"
         placeholder="The number of ICP in the neuron"
-        onChange={e => setStake(e.target.value)}
+        onChange={e => setStakeSize(e.target.value)}
       />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
@@ -62,8 +67,8 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
           margin="normal"
           id="date-picker-inline"
           label="Starting date"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={calcParams.startDate}
+          onChange={date => setCalcParams({ ...calcParams, startDate: date })}
           KeyboardButtonProps={{
             "aria-label": "change date",
           }}
@@ -71,9 +76,9 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       </MuiPickersUtilsProvider>
       <PercentageSlider
         title={"With a dissolve period of:"}
-        percentage={lockupPeriod}
-        setPerc={setPeriod}
-        postfix={lockupPeriod > 1 ? " years" : " year"}
+        percentage={calcParams.lockupPeriod}
+        setPerc={setLockupPeriod}
+        postfix={calcParams.lockupPeriod > 1 ? " years" : " year"}
         min={0.3}
         max={8}
         step={0.1}
@@ -82,7 +87,7 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
       <AdvancedSettings open={open} handleExpand={handleExpand}>
         <PercentageSlider
           title="percentage of votes participated in:"
-          percentage={votingPerc}
+          percentage={calcParams.votingPerc}
           setPerc={setVotingPerc}
           postfix="%"
           max={100}
@@ -92,8 +97,8 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         />
         <PercentageSlider
           title="percentage locked inside voting neurons:"
-          percentage={stakePerc}
-          setPerc={setStakePerc}
+          percentage={calcParams.stakedPerc}
+          setPerc={setStakedPerc}
           postfix="%"
           defaulValue={90}
           min={1}
@@ -103,9 +108,9 @@ const InputFields = (props: { calculate: (x: CalculatorParameters) => void }) =>
         <div>for now assumed constant total supply:</div>
         <FormattedTextInput
           required={true}
-          id="total supplyasd"
+          id="total supply"
           label="total supply"
-          value={totalSupply}
+          value={calcParams.totalSupply}
           placeholder="total number of tokens"
           type="number"
           onChange={e => setTotalSupply(e.target.value)}
