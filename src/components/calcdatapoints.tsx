@@ -34,12 +34,14 @@ const createDataPoints = (params: CalculatorParameters) => {
       datapoints.push({
         x: "release",
         y: cumulativeReward, // should account for maturity somehow as well
+        days: days,
       })
     }
     if (days % 365 === 0) {
       datapoints.push({
         x: days / 365 === 0 ? "creation" : "year " + days / 365,
         y: cumulativeReward,
+        days: days,
       })
     }
   }

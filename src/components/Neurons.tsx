@@ -11,6 +11,7 @@ import TabList from "@material-ui/lab/TabList"
 import TabPanel from "@material-ui/lab/TabPanel"
 import Tab from "@material-ui/core/Tab"
 import { Button, Paper } from "@material-ui/core"
+import ReturnTable from "./ReturnTable"
 
 const Neurons = () => {
   const standardParams = {
@@ -75,6 +76,11 @@ const Neurons = () => {
         calcParams={neurons[index].params}
         reward={reward ? reward : "0"}
         neuronName={"Neuron " + (index + 1)}
+      />
+      <ReturnTable
+        stakeSize={neurons[index].params.stakeSize}
+        startDate={neurons[index].params.startDate}
+        data={neurons[index].data}
       />
       <div className="border border-gray-300 w-full h-96">
         <Chart data={neurons[index].data} />
