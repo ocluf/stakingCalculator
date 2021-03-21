@@ -14,10 +14,11 @@ interface Datapoint {
   y: number
 }
 
-interface Neuron {
+interface NeuronType {
   params: CalculatorParameters
   data: Array<Datapoint>
   index: number
+  id: string
 }
 
 interface NumberFormatCustomProps {

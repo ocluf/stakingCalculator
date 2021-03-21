@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { CalculatorParameters, Neuron } from "../types/types"
+import { CalculatorParameters, NeuronType } from "../types/types"
 import createDataPoints from "../components/calcdatapoints"
 import InputFields from "./inputFields/InputFields"
 import Chart from "./Chart"
@@ -12,8 +12,12 @@ import TabPanel from "@material-ui/lab/TabPanel"
 import Tab from "@material-ui/core/Tab"
 import { Button, Paper } from "@material-ui/core"
 import ReturnTable from "./ReturnTable"
+import Accordion from "@material-ui/core/Accordion"
+import AccordionSummary from "@material-ui/core/AccordionSummary"
+import AccordionDetails from "@material-ui/core/AccordionDetails"
+import Neuron from "./Neuron"
 
-const Neurons = () => {
+const Neurons = (props: { initialId: string }) => {
   const standardParams = {
     stakeSize: 100,
     startDate: new Date("2021-03-31"),
@@ -23,68 +27,54 @@ const Neurons = () => {
     totalSupply: 476190476,
   }
 
-  const [neurons, setNeurons]: [Array<Neuron>, Function] = useState([
+  const randomString = () => {
+    return new Date().getTime().toString() + "-" + Math.random().toString
+  }
+
+  const [expanded, setExpanded] = useState<string | false>(props.initialId)
+  const handleExpand = (id: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    setExpanded(isExpanded ? id : false)
+  }
+
+  const [neurons, setNeurons]: [Array<NeuronType>, Function] = useState([
     {
       params: standardParams,
       data: [],
       index: 0,
+      id: props.initialId,
     },
   ])
-  const [index, setIndex]: [number, Function] = useState(0)
-  const reward = neurons[index].data.slice(-1)[0]?.y.toFixed(2)
 
   const handleAddNeuron = () => {
-    const newNeurons = neurons.concat({ params: standardParams, data: [], index: neurons.length })
+    const newNeurons = neurons.concat({ params: standardParams, data: [], index: neurons.length, id: randomString() })
     setNeurons(newNeurons)
   }
 
-  const setCalcParams = (calcParams: CalculatorParameters) => {
-    const data = createDataPoints(calcParams)
-    const newNeurons = neurons.map(neuron => {
-      if (neuron.index === index) {
-        neuron.data = data
-        neuron.params = calcParams
-        return neuron
-      } else {
-        return neuron
-      }
-    })
+  const handleDeleteNeuron = (id: string) => {
+    const newNeurons = neurons
+      .filter(neuron => neuron.id !== id)
+      .map((neuron, index) => {
+        return { ...neuron, index: index }
+      })
     setNeurons(newNeurons)
   }
 
   return (
-    <div className="flex flex-col p-3 space-y-4 max-w-lg mx-auto">
-      <InputFields calcParams={neurons[index].params} calculate={setCalcParams} />
-      <Button variant="contained" color="primary" onClick={handleAddNeuron}>
+    <div>
+      {neurons.map(neuron => {
+        return (
+          <Neuron
+            key={neuron.id}
+            neuron={neuron}
+            expanded={neuron.id === expanded}
+            handleExpand={handleExpand}
+            handleDelete={handleDeleteNeuron}
+          ></Neuron>
+        )
+      })}
+      <Button variant="contained" color="primary" onClick={handleAddNeuron} className="w-full">
         Add Neuron
       </Button>
-      <TabContext value={index.toString()}>
-        <Paper square>
-          <TabList
-            selectionFollowsFocus
-            indicatorColor="primary"
-            onChange={(event, value) => setIndex(parseInt(value))}
-            aria-label="simple tabs example"
-          >
-            {neurons.map(neuron => (
-              <Tab key={neuron.index} label={"Neuron " + (neuron.index + 1)} value={neuron.index.toString()}></Tab>
-            ))}
-          </TabList>
-        </Paper>
-      </TabContext>
-      <CalculationOutcome
-        calcParams={neurons[index].params}
-        reward={reward ? reward : "0"}
-        neuronName={"Neuron " + (index + 1)}
-      />
-      <ReturnTable
-        stakeSize={neurons[index].params.stakeSize}
-        startDate={neurons[index].params.startDate}
-        data={neurons[index].data}
-      />
-      <div className="border border-gray-300 w-full h-96">
-        <Chart data={neurons[index].data} />
-      </div>
     </div>
   )
 }
