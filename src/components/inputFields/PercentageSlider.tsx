@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Slider from "@material-ui/core/Slider"
 
 const PercentageSlider = (props: {
@@ -7,27 +7,30 @@ const PercentageSlider = (props: {
   setPerc: Function
   postfix?: string
   valueToDisplay?: string
-  defaulValue: number
+  defaultValue: number
   max: number
   min: number
   step: number
 }) => {
+  const [value, setValue] = useState(props.percentage)
+
   return (
     <div>
       <div>
         <div className="flex">
           <span className="flex-1">{props.title}</span>
-          <span className="flex">{props.valueToDisplay ? props.valueToDisplay : props.percentage + props.postfix}</span>
+          <span className="flex">{value + props.postfix}</span>
         </div>
       </div>
       <Slider
         id="percentageSlider"
-        defaultValue={props.defaulValue}
+        defaultValue={props.defaultValue}
         min={props.min}
         max={props.max}
         step={props.step}
-        value={props.percentage}
-        onChange={(e, value) => props.setPerc(value)}
+        value={value}
+        onChangeCommitted={(e, value) => props.setPerc(value)}
+        onChange={(e, value) => setValue(value)}
         aria-labelledby="percentage slider"
       />
     </div>

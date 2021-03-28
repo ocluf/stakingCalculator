@@ -2,22 +2,23 @@ import Card from "@material-ui/core/Card"
 import { Link } from "gatsby"
 import React from "react"
 import NumberFormat from "react-number-format"
+import { ResultData } from "../types/types"
 
-const CalculationOutcome = (props: { calcParams: CalculatorParameters | null; reward: string; neuronName: string }) => {
+const CalculationOutcome = (props: { resultData: ResultData; neuronName: string }) => {
   return (
     <>
-      {props.calcParams ? (
+      {props.resultData ? (
         <Card className="p-7">
           <h1 className="font-bold text-xl">Result</h1>
-          <br /> After <span className="font-bold">{props.calcParams?.lockupPeriod} years</span>, with a stake of
+          <br /> After <span className="font-bold">{props.resultData?.stakePeriod} years</span>, with a stake of
           <span className="font-bold">
             {" "}
-            <NumberFormat value={props.calcParams?.stakeSize} thousandSeparator displayType={"text"}></NumberFormat> ICP
+            <NumberFormat value={props.resultData?.stake} thousandSeparator displayType={"text"}></NumberFormat> ICP
           </span>
           , your total return for {props.neuronName} would be
           <span className="font-bold">
             {" "}
-            <NumberFormat value={props.reward} thousandSeparator displayType={"text"}></NumberFormat> ICP
+            <NumberFormat value={props.resultData.reward} thousandSeparator displayType={"text"}></NumberFormat> ICP
           </span>{" "}
           <br></br>
           <br></br>

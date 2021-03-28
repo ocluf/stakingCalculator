@@ -14,7 +14,7 @@
 @layer base {
   html,
   body {
-    @apply font-sans overflow-x-hidden max-w-full;
+    @apply font-sans overflow-x-hidden max-w-full bg-gray-100;
   }
 
   body {

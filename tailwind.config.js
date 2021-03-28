@@ -6,10 +6,14 @@ module.exports = {
     purgeLayersByDefault: true,
   },
   theme: {
-    minWidth: {
-      '300': '300px',
+    extend: {
+      minWidth: {
+        '300': '300px',
+      },
+      maxWidth: {
+        "w-logo": '30px'
+      }
     },
-    extend: {},
   },
   variants: {
     extend: {},
