@@ -31,6 +31,8 @@ interface ResultData {
   stake: number
   reward: number | null
   stakePeriod: number
+  // startData: Date
+  // neuronId: string
 }
 
 interface NumberFormatCustomProps {

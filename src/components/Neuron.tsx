@@ -16,14 +16,16 @@ const Neuron = (props: {
   handleExpand: Function
   handleDelete: Function
   globalParameters: GlobalParameters
+  // setRewards: Function
 }) => {
   const neuronName = "Neuron " + (props.neuron.index + 1)
   const [data, setData] = useState([])
-
   const [resultData, setResultData] = useState<ResultData>({
     stake: props.neuron.params.stakeSize,
     reward: null,
     stakePeriod: props.neuron.params.lockupPeriod,
+    // startData: props.neuron.params.startDate,
+    // neuronId: props.neuron.id,
   })
 
   const calculate = (calcParams: CalculatorParameters) => {
@@ -33,7 +35,10 @@ const Neuron = (props: {
       stake: calcParams.stakeSize,
       reward: data.slice(-1)[0]?.y.toFixed(2),
       stakePeriod: calcParams.lockupPeriod,
+      // startData: calcParams.startDate,
+      // neuronId: props.neuron.id,
     })
+    //props.setRewards(resultData)
   }
 
   return (
@@ -44,22 +49,22 @@ const Neuron = (props: {
       className="mt-4 mb-4"
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />} className="flex">
-        <div>{neuronName}</div>
+        <div className="font-bold text-primary ">{neuronName}</div>
         <div className="flex-1 text-right text-gray-500">
           {resultData.reward ? "~" + resultData.reward + " ICP" : ""}{" "}
         </div>
       </AccordionSummary>
       <AccordionDetails>
-        <Container className="flex flex-col space-y-4">
+        <Container className="flex flex-col">
           <InputFields
             calcParams={props.neuron.params}
             calculate={calculate}
             globalParameters={props.globalParameters}
           />
-          <CalculationOutcome resultData={resultData} neuronName={neuronName} />
-          <Container className="w-full h-96">
+          <div className="w-full h-96 -mt-3">
             <Chart data={data} />
-          </Container>
+          </div>
+          <CalculationOutcome resultData={resultData} neuronName={neuronName} />
           {props.neuron.index === 0 ? null : (
             <Button
               variant="contained"

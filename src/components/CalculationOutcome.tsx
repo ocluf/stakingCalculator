@@ -8,8 +8,7 @@ const CalculationOutcome = (props: { resultData: ResultData; neuronName: string 
   return (
     <>
       {props.resultData ? (
-        <Card className="p-7">
-          <h1 className="font-bold text-xl">Result</h1>
+        <div>
           <br /> After <span className="font-bold">{props.resultData?.stakePeriod} years</span>, with a stake of
           <span className="font-bold">
             {" "}
@@ -28,7 +27,7 @@ const CalculationOutcome = (props: { resultData: ResultData; neuronName: string 
               FAQ
             </Link>
           </span>
-        </Card>
+        </div>
       ) : null}
     </>
   )

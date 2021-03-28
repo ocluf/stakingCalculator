@@ -1,10 +1,11 @@
 import React from "react"
 import { useState } from "react"
-import { GlobalParameters, NeuronType } from "../types/types"
+import { GlobalParameters, NeuronType, ResultData } from "../types/types"
 import { Button, Paper } from "@material-ui/core"
 import Neuron from "./Neuron"
 import AdvancedSettings from "./inputFields/AdvancedSettings"
 import PercentageSlider from "./inputFields/PercentageSlider"
+import GlobalCalculationOutcome from "./GlobalCalculationOutcome"
 
 const Neurons = (props: { initialId: string }) => {
   const standardParams = {
@@ -23,6 +24,12 @@ const Neurons = (props: { initialId: string }) => {
     averageDissolveDelay: 4,
     totalSupply: 476190476,
   })
+
+  // const [rewards, setRewards] = useState<Array<ResultData>>([])
+  // const handleRewardChange = (resultData: ResultData) => {
+  //   const newRewards = rewards.filter(reward => reward.neuronId !== resultData.neuronId)
+  //   setRewards(newRewards.concat(resultData))
+  // }
 
   // advanced settings collapse
   const [open, setOpen] = useState(false)
@@ -73,6 +80,7 @@ const Neurons = (props: { initialId: string }) => {
         handleExpand={handleExpand}
         handleDelete={handleDeleteNeuron}
         globalParameters={globalParameters}
+        // setRewards={handleRewardChange}
       ></Neuron>
     )
   })
@@ -138,7 +146,7 @@ const Neurons = (props: { initialId: string }) => {
         ></FormattedTextInput> */}
         </AdvancedSettings>
       </Paper>
-      <Paper>YOUR TOTAL RETURN AFTER 30 years is :</Paper>
+      {/* <GlobalCalculationOutcome resultData={rewards} /> */}
     </div>
   )
 }

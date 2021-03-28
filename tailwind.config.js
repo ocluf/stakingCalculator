@@ -12,6 +12,9 @@ module.exports = {
       },
       maxWidth: {
         "w-logo": '30px'
+      },
+      colors: {
+        "primary": "#4051b5"
       }
     },
   },
