@@ -54,6 +54,9 @@ const daysSinceGenesis = (date: Date) => {
 
 const createDataPoints = (params: CalculatorParameters, globalParameters: GlobalParameters) => {
   const datapoints = []
+  if (isNaN(params.stakeSize)) {
+    return [{ x: "year 0", y: 0 }]
+  }
 
   const daysPastGenesis = daysSinceGenesis(params.startDate)
   let summedMaturity = 0

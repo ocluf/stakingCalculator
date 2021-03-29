@@ -94,7 +94,7 @@ const Neurons = (props: { initialId: string }) => {
       <Paper className="px-4 py-2 my-4">
         <AdvancedSettings open={open} handleExpand={handleAdvancedExpand}>
           <PercentageSlider
-            title="percentage locked inside voting neurons:"
+            title="Percentage locked inside voting neurons:"
             percentage={globalParameters.stakedPerc}
             setPerc={(x: number) => setGlobalParameters({ ...globalParameters, stakedPerc: x })}
             postfix="%"

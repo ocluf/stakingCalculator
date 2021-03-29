@@ -29,16 +29,18 @@ const Neuron = (props: {
   })
 
   const calculate = (calcParams: CalculatorParameters) => {
-    const data = createDataPoints(calcParams, props.globalParameters)
-    setData(data)
-    setResultData({
-      stake: calcParams.stakeSize,
-      reward: data.slice(-1)[0]?.y.toFixed(2),
-      stakePeriod: calcParams.lockupPeriod,
-      // startData: calcParams.startDate,
-      // neuronId: props.neuron.id,
-    })
-    //props.setRewards(resultData)
+    if (!isNaN(calcParams.stakeSize) && calcParams.stakeSize > 0) {
+      const data = createDataPoints(calcParams, props.globalParameters)
+      setData(data)
+      setResultData({
+        stake: calcParams.stakeSize,
+        reward: data.slice(-1)[0]?.y.toFixed(2),
+        stakePeriod: calcParams.lockupPeriod,
+        // startData: calcParams.startDate,
+        // neuronId: props.neuron.id,
+      })
+      //props.setRewards(resultData)
+    }
   }
 
   return (
