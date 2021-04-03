@@ -4,10 +4,10 @@ import DateFnsUtils from "@date-io/date-fns"
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers"
 import NumberFormat from "react-number-format"
 import InputAdornment from "@material-ui/core/InputAdornment"
-import PercentageSlider from "./PercentageSlider"
-import AdvancedSettings from "./AdvancedSettings"
-import { CalculatorParameters, GlobalParameters, NumberFormatCustomProps } from "../../types/types"
-import FormattedTextInput from "./FormattedTextInput"
+import PercentageSlider from "../../components/input/PercentageSlider"
+import AdvancedSettings from "../../components/input/AdvancedSettings"
+import { CalculatorParameters, GlobalParameters, NumberFormatCustomProps } from "../../types"
+import FormattedTextInput from "../../components/input/FormattedTextInput"
 
 const InputFields = (props: {
   calcParams: CalculatorParameters

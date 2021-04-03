@@ -30,7 +30,7 @@ const NumberFormatCustom = (props: NumberFormatCustomProps) => {
 }
 
 const FormattedTextInput = (props: any) => {
-  const { onChange, placeholder, id, label, value }: any = props
+  const { onChange, placeholder, id, label, value, isValid }: any = props
 
   return (
     <TextField
@@ -39,6 +39,7 @@ const FormattedTextInput = (props: any) => {
       label={label}
       variant="outlined"
       value={value}
+      error={isValid}
       placeholder={placeholder}
       InputProps={{
         inputComponent: NumberFormatCustom as any,

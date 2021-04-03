@@ -1,33 +1,40 @@
 import NumberFormat from "react-number-format"
 
-interface CalculatorParameters {
+export interface NeuronType {
+  id: string
+  stakeSize: number
+  startDate: number
+  lockupPeriod: number // number of years
+  data: Array<Datapoint>
+}
+
+export interface CalculatorParameters {
   stakeSize: number
   lockupPeriod: number
   startDate: Date
-  votingPerc?: number
 }
 
-interface GlobalParameters {
+export interface GlobalParameters {
   stakedPerc: number
-  maturityLevel: number
+  averageMaturityLevel: number
   votingPerc: number
   averageDissolveDelay: number
   totalSupply: number
 }
 
-interface Datapoint {
+export interface Datapoint {
   x: string
   y: number
 }
 
-interface NeuronType {
+export interface NeuronTypeOld {
   params: CalculatorParameters
   data: Array<Datapoint>
   index: number
   id: string
 }
 
-interface ResultData {
+export interface ResultData {
   stake: number
   reward: number | null
   stakePeriod: number
@@ -35,7 +42,7 @@ interface ResultData {
   // neuronId: string
 }
 
-interface NumberFormatCustomProps {
+export interface NumberFormatCustomProps {
   inputRef: (instance: NumberFormat | null) => void
   onChange: (event: { target: { name: string; value: string } }) => void
   name: string

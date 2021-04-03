@@ -1,85 +1,55 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react"
-import Accordion from "@material-ui/core/Accordion"
-import AccordionDetails from "@material-ui/core/AccordionDetails"
-import AccordionSummary from "@material-ui/core/AccordionSummary"
-import { CalculatorParameters, NeuronType, GlobalParameters, ResultData } from "../types/types"
-import createDataPoints from "./calcdatapoints"
-import InputFields from "./inputFields/InputFields"
-import CalculationOutcome from "./CalculationOutcome"
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import Chart from "./Chart"
-import { Button, Container } from "@material-ui/core"
+import { Collapse } from "@material-ui/core"
+import Button from "@material-ui/core/Button"
+import ExpandLess from "@material-ui/icons/ExpandLess"
+import ExpandMore from "@material-ui/icons/ExpandMore"
+import React from "react"
+import { useDispatch } from "react-redux"
+import Chart from "./chart"
+import { useAppSelector } from "../redux/hooks"
+import { changeExpanded, deleteNeuron } from "../redux/store"
+import { GlobalParameters, NeuronType } from "../types"
+import StakePeriodInput from "./input/StakePeriodInput"
+import StakeSizeInput from "./input/StakeSizeInput"
+import StartDateInput from "./input/StartDateInput"
 
-const Neuron = (props: {
-  neuron: NeuronType
-  expanded: boolean
-  handleExpand: Function
-  handleDelete: Function
-  globalParameters: GlobalParameters
-  // setRewards: Function
-}) => {
-  const neuronName = "Neuron " + (props.neuron.index + 1)
-  const [data, setData] = useState([])
-  const [resultData, setResultData] = useState<ResultData>({
-    stake: props.neuron.params.stakeSize,
-    reward: null,
-    stakePeriod: props.neuron.params.lockupPeriod,
-    // startData: props.neuron.params.startDate,
-    // neuronId: props.neuron.id,
-  })
+const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters }) => {
+  const largeScreen: boolean = useAppSelector(state => state.largeScreen)
+  const currentNeuronId: string = useAppSelector(state => state.currenNeuronId)
+  const dispatch = useDispatch()
+  const dataLength: number = props.neuron.data.length
+  const finalReward: string = dataLength > 0 ? props.neuron.data[dataLength - 1].y.toFixed(2) : "0"
 
-  const calculate = (calcParams: CalculatorParameters) => {
-    if (!isNaN(calcParams.stakeSize) && calcParams.stakeSize > 0) {
-      const data = createDataPoints(calcParams, props.globalParameters)
-      setData(data)
-      setResultData({
-        stake: calcParams.stakeSize,
-        reward: data.slice(-1)[0]?.y.toFixed(2),
-        stakePeriod: calcParams.lockupPeriod,
-        // startData: calcParams.startDate,
-        // neuronId: props.neuron.id,
-      })
-      //props.setRewards(resultData)
-    }
-  }
+  const chart = largeScreen ? null : (
+    <div className="w-auto h-96">
+      <Chart data={props.neuron.data}></Chart>
+    </div>
+  )
 
   return (
-    <Accordion
-      expanded={props.expanded}
-      onChange={props.handleExpand(props.neuron.id)}
-      square={false}
-      className="mt-4 mb-4"
-    >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} className="flex">
-        <div className="font-bold text-primary ">{neuronName}</div>
-        <div className="flex-1 text-right text-gray-500">
-          {resultData.reward ? "~" + resultData.reward + " ICP" : ""}{" "}
-        </div>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Container className="flex flex-col">
-          <InputFields
-            calcParams={props.neuron.params}
-            calculate={calculate}
-            globalParameters={props.globalParameters}
-          />
-          <div className="w-full h-96 -mt-3">
-            <Chart data={data} />
+    <div className="bg-white max-w-lg m-5 rounded-lg shadow-lg">
+      <div
+        className="flex flex-row p-4 cursor-pointer"
+        onClick={() => dispatch(changeExpanded({ id: props.neuron.id }))}
+      >
+        <div className="font-bold text-primary">Neuron</div>
+        <div className="flex-1 text-right text-gray-500">{"~" + finalReward + " ICP"}</div>
+        {props.neuron.id === currentNeuronId ? <ExpandLess /> : <ExpandMore />}
+      </div>
+      <Collapse in={props.neuron.id === currentNeuronId} unmountOnExit timeout="auto">
+        <div className="w-auto h-auto m-2 p-4 flex flex-shrink-0 flex-col max-w-lg">
+          <StakeSizeInput neuronId={props.neuron.id} stakeSize={props.neuron.stakeSize}></StakeSizeInput>
+          <StartDateInput neuronId={props.neuron.id} startDate={props.neuron.startDate}></StartDateInput>
+          <StakePeriodInput neuronId={props.neuron.id} lockupPeriod={props.neuron.lockupPeriod}></StakePeriodInput>
+          {chart}
+          <div
+            className="font-semibold text-delete ml-auto pt-2 cursor-pointer"
+            onClick={() => dispatch(deleteNeuron({ id: props.neuron.id }))}
+          >
+            DELETE NEURON
           </div>
-          <CalculationOutcome resultData={resultData} neuronName={neuronName} />
-          {props.neuron.index === 0 ? null : (
-            <Button
-              variant="contained"
-              color="secondary"
-              className="float-right"
-              onClick={() => props.handleDelete(props.neuron.id)}
-            >
-              Delete
-            </Button>
-          )}
-        </Container>
-      </AccordionDetails>
-    </Accordion>
+        </div>
+      </Collapse>
+    </div>
   )
 }
 

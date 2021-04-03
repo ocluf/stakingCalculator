@@ -28,9 +28,11 @@
     "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-sass": "^3.2.0",
     "gatsby-transformer-typescript-css-modules": "^1.0.14",
+    "nanoid": "^3.1.22",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-number-format": "^4.4.4",
+    "react-redux": "^7.2.3",
     "recharts": "^2.0.4",
     "redux": "^4.0.5",
     "sass": "^1.32.8"
@@ -40,6 +42,7 @@
     "gatsby-plugin-postcss": "^3.7.0",
     "postcss": "^8.2.6",
     "prettier": "2.2.1",
+    "redux-devtools-extension": "^2.13.9",
     "tailwindcss": "^2.0.3"
   },
   "repository": {

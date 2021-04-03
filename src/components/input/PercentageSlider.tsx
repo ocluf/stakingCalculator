@@ -30,7 +30,7 @@ const PercentageSlider = (props: {
         step={props.step}
         value={value}
         onChangeCommitted={(e, value) => props.setPerc(value)}
-        onChange={(e, value) => setValue(value)}
+        onChange={(e, value) => setValue(value)} //TODO handle type error
         aria-labelledby="percentage slider"
       />
     </div>

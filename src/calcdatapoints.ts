@@ -1,5 +1,5 @@
-import { CalculatorParameters, GlobalParameters } from "../types/types"
-import { React } from "react"
+import { CalculatorParameters, GlobalParameters, NeuronType } from "./types"
+
 interface Neuron {
   age_days: number
   locked_ICP: number
@@ -52,26 +52,26 @@ const daysSinceGenesis = (date: Date) => {
   return Math.ceil(difference / (1000 * 3600 * 24))
 }
 
-const createDataPoints = (params: CalculatorParameters, globalParameters: GlobalParameters) => {
+const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters) => {
   const datapoints = []
-  if (isNaN(params.stakeSize)) {
+  if (isNaN(neuron.stakeSize)) {
     return [{ x: "year 0", y: 0 }]
   }
 
-  const daysPastGenesis = daysSinceGenesis(params.startDate)
+  const daysPastGenesis = daysSinceGenesis(new Date(neuron.startDate)) // fix this hack
   let summedMaturity = 0
-  const totalLockupPeriod = params.lockupPeriod * 365
-  let currentDisolvePeriod = params.lockupPeriod * 365.25
+  const totalLockupPeriod = neuron.lockupPeriod * 365
+  let currentDisolvePeriod = neuron.lockupPeriod * 365.25
 
   for (let i = 0; i < totalLockupPeriod; i++) {
     const currentDayPastGenesis = daysPastGenesis + i
     let currentDissolveDelay = Math.min(currentDisolvePeriod, 2922)
-    const averageMaturity = Math.min(globalParameters.maturityLevel * 365, currentDayPastGenesis)
+    const averageMaturity = Math.min(globalParameters.averageMaturityLevel * 365, currentDayPastGenesis)
     // TODO add average dissolve delay to parameters
     // TODO dissolve delay should decrease to the end
     const myNeuron: Neuron = {
       age_days: i,
-      locked_ICP: params.stakeSize,
+      locked_ICP: neuron.stakeSize,
       dissolve_delay: currentDissolveDelay,
     }
 
@@ -103,46 +103,12 @@ const createDataPoints = (params: CalculatorParameters, globalParameters: Global
     if (i % 364 === 0) {
       datapoints.push({
         x: "year " + i / 364,
-        y: summedMaturity * params.stakeSize,
+        y: summedMaturity * neuron.stakeSize,
         days: currentDayPastGenesis,
       })
     }
   }
   return datapoints
 }
-
-// const createDataPoints = (params: CalculatorParameters, stakedPerc: number, totalSupplyInput: number) => {
-//   const daysPastGenesis = daysSinceGenesis(params.startDate)
-//   const totalDaysStaked: number = Math.ceil(params.lockupPeriod * 365)
-//   const totalSupply: number = totalSupplyInput ? totalSupplyInput : STANDARD_TOTAL_SUPPLY
-//   const totalStakePerc: number = stakedPerc ? stakedPerc : STANDARD_PERCENTAGE_STAKED
-//   const votingPerc: number = params.votingPerc ? params.votingPerc : STANDARD_VOTING_PERCENTAGE
-//   const relativeStakePerc: number = params.stakeSize / (totalStakePerc * totalSupply)
-
-//   const datapoints = []
-//   let cumulativeReward = 0
-//   for (let days = 0; days < totalDaysStaked; days++) {
-//     const totalDailyReward: number = rewardFraction(daysPastGenesis + days) * totalSupply
-//     const personalDailyReward: number = totalDailyReward * (1 / 365) * relativeStakePerc * votingPerc
-//     cumulativeReward = cumulativeReward + personalDailyReward
-
-//     if (days + 1 === totalDaysStaked) {
-//       datapoints.push({
-//         x: "release",
-//         y: cumulativeReward, // should account for maturity somehow as well
-//         days: days,
-//       })
-//     }
-//     if (days % 365 === 0) {
-//       datapoints.push({
-//         x: days / 365 === 0 ? "creation" : "year " + days / 365,
-//         y: cumulativeReward,
-//         days: days,
-//       })
-//     }
-//   }
-
-//   return datapoints
-// }
 
 export default createDataPoints

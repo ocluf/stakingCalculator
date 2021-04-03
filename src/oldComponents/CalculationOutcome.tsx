@@ -2,7 +2,7 @@ import Card from "@material-ui/core/Card"
 import { Link } from "gatsby"
 import React from "react"
 import NumberFormat from "react-number-format"
-import { ResultData } from "../types/types"
+import { ResultData } from "../types"
 
 const CalculationOutcome = (props: { resultData: ResultData; neuronName: string }) => {
   return (

@@ -14,7 +14,8 @@ module.exports = {
         "w-logo": '30px'
       },
       colors: {
-        "primary": "#4051b5"
+        "primary": "#4051b5",
+        "delete": "#FF000F"
       }
     },
   },

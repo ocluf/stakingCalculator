@@ -1,18 +1,21 @@
 import "../css/index.css"
-import React, { useState } from "react"
-import Banner from "../components/Banner"
-import InputFields from "../components/inputFields/InputFields"
-import Chart from "../components/Chart"
-import CalculationOutcome from "../components/CalculationOutcome"
-import Neurons from "../components/Neurons"
+import React from "react"
+import { Provider } from "react-redux"
+import { store } from "../redux/store"
+import App from "../components/App"
 
 export default function Home() {
   return (
-    <div>
-      <Banner />
-      <div className="flex flex-col p-3 space-y-4 max-w-lg mx-auto">
-        <Neurons initialId={Math.random().toString()} />
-      </div>
-    </div>
+    <Provider store={store}>
+      <App></App>
+    </Provider>
   )
+}
+{
+  /* <div>
+<Banner />
+<div className="flex flex-col p-3 space-y-4 max-w-lg mx-auto">
+  <Neurons initialId={Math.random().toString()} />
+</div>
+</div> */
 }
