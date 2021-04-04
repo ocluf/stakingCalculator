@@ -9,18 +9,13 @@ import Neuron from "./Neuron"
 const Neurons = () => {
   const neurons = useAppSelector(state => state.neurons)
   const globalParameters = useAppSelector(state => state.globalParameters)
-  const dispatch = useDispatch()
 
   return (
     <div className="w-lg">
       {neurons.map(neuron => (
         <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters}></Neuron>
       ))}
-      <div className="mx-5 max-w-lg shadow-lg">
-        <Button variant="contained" color="primary" onClick={() => dispatch(addNeuron())} className="w-full">
-          Add Neuron
-        </Button>
-      </div>
+      <div className="mx-5 max-w-lg shadow-lg"></div>
     </div>
   )
 }

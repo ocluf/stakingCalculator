@@ -7,15 +7,26 @@ module.exports = {
   },
   theme: {
     extend: {
+      width: {
+        addButton: "56px"
+      },
+      height: {
+        bottombar: '56px'
+      },
       minWidth: {
         '300': '300px',
       },
       maxWidth: {
-        "w-logo": '30px'
+        "logo": '35px'
+      },
+      maxHeight: {
+        "logo": '52px'
       },
       colors: {
         "primary": "#4051b5",
-        "delete": "#FF000F"
+        "delete": "#FF000F",
+        "blue": "#29ABE2",
+        "orange": "#FCB13B"
       }
     },
   },

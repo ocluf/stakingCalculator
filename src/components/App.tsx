@@ -1,7 +1,9 @@
 import React from "react"
 import { useAppSelector } from "../redux/hooks"
+import Banner from "./Banner"
 import Chart from "./chart"
 import AdvancedSettings from "./input/AdvancedSettings"
+import MobileBottomBar from "./MobileBottomBar"
 import Neurons from "./Neurons"
 import TotalResult from "./TotalResult"
 
@@ -28,12 +30,12 @@ const App = () => {
 
   return (
     <>
-      <div className="sm:grid grid-cols-2">
-        <Neurons></Neurons>
-        {chart()}
-        <AdvancedSettings></AdvancedSettings>
-        <TotalResult></TotalResult>
-      </div>
+      <Banner></Banner>
+      <Neurons></Neurons>
+      {chart()}
+      <AdvancedSettings></AdvancedSettings>
+      <TotalResult></TotalResult>
+      <MobileBottomBar></MobileBottomBar>
     </>
   )
 }

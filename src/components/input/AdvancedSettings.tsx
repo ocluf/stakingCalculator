@@ -20,7 +20,6 @@ const AdvancedSettings = () => {
       </div>
       <Collapse in={open} timeout="auto">
         <div className="flex flex-col w-full space-y-4 p-4 px-8">
-          {" "}
           <PercentageSlider
             title="Percentage locked inside voting neurons:"
             percentage={globalParameters.stakedPerc}
