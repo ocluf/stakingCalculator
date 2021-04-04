@@ -7,7 +7,7 @@ type SliceState = {
   neurons: Array<NeuronType>
   globalParameters: GlobalParameters
   currenNeuronId: string | null
-  largeScreen: boolean
+  //largeScreen: boolean
 }
 const initialGlobalParamaters: GlobalParameters = {
   stakedPerc: 90,
@@ -30,12 +30,16 @@ const createNeuron: Function = (globalParameters: GlobalParameters): NeuronType 
 }
 
 const initialNeuron = createNeuron(initialGlobalParamaters)
-let mql = window.matchMedia("(min-width: 600px)")
+// let mql = typeof window !== "undefined" && window.matchMedia("(min-width: 600px)")
+// typeof window !== "undefined" &&
+//   mql.addEventListener("change", mql => {
+//     store.dispatch(setScreenSize(mql.matches))
+//   })
 
 const initialState: SliceState = {
   neurons: [initialNeuron],
   globalParameters: initialGlobalParamaters,
-  largeScreen: mql.matches,
+  //largeScreen: typeof window !== "undefined" && mql.matches,
   currenNeuronId: initialNeuron.id,
 }
 
@@ -105,7 +109,7 @@ const neuronSlice = createSlice({
       }
     },
     setScreenSize: (state, action: PayloadAction<boolean>) => {
-      state.largeScreen = action.payload
+      //state.largeScreen = action.payload
     },
     changeGlobalParameters: (state, action: PayloadAction<GlobalParameters>) => {
       state.globalParameters = action.payload
@@ -114,10 +118,6 @@ const neuronSlice = createSlice({
       })
     },
   },
-})
-
-mql.addEventListener("change", mql => {
-  store.dispatch(setScreenSize(mql.matches))
 })
 
 export const {

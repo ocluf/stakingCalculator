@@ -6,29 +6,31 @@ import Neurons from "./Neurons"
 import TotalResult from "./TotalResult"
 
 const App = () => {
-  const largeScreen = useAppSelector(state => state.largeScreen)
   const currentNeuron = useAppSelector(state => state.neurons.find(neuron => neuron.id === state.currenNeuronId))
   const chart = (): JSX.Element => {
-    if (!largeScreen) {
-      return null
-    } else if (currentNeuron) {
+    if (currentNeuron) {
       return (
-        <div className="bg-white w-96 h-96 m-5">
+        <div className=" invisible bg-white w-full h-full max-w-2xl max-h-96 rounded-lg shadow-lg sm:visible sm:h-0">
           <Chart data={currentNeuron.data}></Chart>
         </div>
       )
     } else {
-      return <div className="bg-white w-96 h-96 m-5"> No neuron selected</div>
+      return (
+        <div className=" w-auto h-auto m-5">
+          <div className="bg-white w-full h-full max-w-2xl max-h-96 rounded-lg shadow-lg mx-autos">
+            {" "}
+            No neuron selected
+          </div>
+        </div>
+      )
     }
   }
 
   return (
     <>
-      <div className="sm:flex flex-row">
+      <div className="sm:grid grid-cols-2">
         <Neurons></Neurons>
         {chart()}
-      </div>
-      <div className="sm:flex flex-row">
         <AdvancedSettings></AdvancedSettings>
         <TotalResult></TotalResult>
       </div>

@@ -20,4 +20,9 @@
   body {
     @apply relative;
   }
+
+  .minmargin5 {
+    margin-right: min(5px, auto);
+    margin-left: min(5px, auto);
+  }
 }

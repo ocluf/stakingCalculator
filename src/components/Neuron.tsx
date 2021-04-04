@@ -13,17 +13,11 @@ import StakeSizeInput from "./input/StakeSizeInput"
 import StartDateInput from "./input/StartDateInput"
 
 const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters }) => {
-  const largeScreen: boolean = useAppSelector(state => state.largeScreen)
+  //const largeScreen: boolean = useAppSelector(state => state.largeScreen)
   const currentNeuronId: string = useAppSelector(state => state.currenNeuronId)
   const dispatch = useDispatch()
   const dataLength: number = props.neuron.data.length
   const finalReward: string = dataLength > 0 ? props.neuron.data[dataLength - 1].y.toFixed(2) : "0"
-
-  const chart = largeScreen ? null : (
-    <div className="w-auto h-96">
-      <Chart data={props.neuron.data}></Chart>
-    </div>
-  )
 
   return (
     <div className="bg-white max-w-lg m-5 rounded-lg shadow-lg">
@@ -40,7 +34,9 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters 
           <StakeSizeInput neuronId={props.neuron.id} stakeSize={props.neuron.stakeSize}></StakeSizeInput>
           <StartDateInput neuronId={props.neuron.id} startDate={props.neuron.startDate}></StartDateInput>
           <StakePeriodInput neuronId={props.neuron.id} lockupPeriod={props.neuron.lockupPeriod}></StakePeriodInput>
-          {chart}
+          <div className="w-auto h-96 sm:invisible sm:h-0">
+            <Chart data={props.neuron.data}></Chart>
+          </div>
           <div
             className="font-semibold text-delete ml-auto pt-2 cursor-pointer"
             onClick={() => dispatch(deleteNeuron({ id: props.neuron.id }))}

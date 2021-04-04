@@ -13,7 +13,7 @@ const AdvancedSettings = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className="bg-white m-5 rounded-lg shadow-lg">
+    <div className="bg-white max-w-lg m-5 rounded-lg shadow-lg">
       <div className="bg-white rounded-lg flex w-full p-4" onClick={() => setOpen(!open)}>
         Advanced settings
         <div className="ml-auto">{open ? <ExpandLess /> : <ExpandMore />}</div>

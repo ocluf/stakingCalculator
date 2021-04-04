@@ -21,7 +21,7 @@ const TotalResult = () => {
   const Bold = (props: { x: string }) => <span className="font-semibold">{props.x}</span>
 
   return (
-    <div className="w-auto bg-white p-5 m-5 rounded-lg shadow-lg">
+    <div className="w-auto h-auto bg-white p-5 m-5 rounded-lg shadow-lg">
       Starting at <Bold x={new Date(lowestStartDate).toDateString()} /> After <Bold x={totalPeriod + " years"} /> your
       combined neuron return would be <Bold x={totalReward.toFixed(2)} />
     </div>

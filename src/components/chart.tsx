@@ -15,7 +15,7 @@ const Chart = (props: { data }) => {
   ]
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full rounded-lg">
       <ResponsiveLine
         data={chartData}
         tooltip={tooltip}

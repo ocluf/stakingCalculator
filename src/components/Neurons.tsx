@@ -12,7 +12,7 @@ const Neurons = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className="w-full">
+    <div className="w-lg">
       {neurons.map(neuron => (
         <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters}></Neuron>
       ))}
