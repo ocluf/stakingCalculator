@@ -4,7 +4,7 @@ import settingsIcon from "../../static/settings.svg"
 import questionMarkIcon from "../../static/questionMark.svg"
 import addButton from "../../static/addButton.png"
 import { useDispatch } from "react-redux"
-import { addNeuron } from "../redux/store"
+import { addNeuron, toggleAdvanced } from "../redux/store"
 
 const MobileBottomBar = () => {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const MobileBottomBar = () => {
     <>
       <div className="bg-blue fixed bottom-0 flex flex-row space-x-4 h-bottombar w-full ">
         <img src={shareIcon} className="pl-2" />
-        <img src={settingsIcon} />
+        <img src={settingsIcon} onClick={() => dispatch(toggleAdvanced())} />
         <img src={questionMarkIcon} />
       </div>
       <img src={addButton} onClick={() => dispatch(addNeuron())} className="fixed bottom-4 right-4" />

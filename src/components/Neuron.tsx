@@ -12,7 +12,7 @@ import StakePeriodInput from "./input/StakePeriodInput"
 import StakeSizeInput from "./input/StakeSizeInput"
 import StartDateInput from "./input/StartDateInput"
 
-const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters }) => {
+const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters; index: number }) => {
   //const largeScreen: boolean = useAppSelector(state => state.largeScreen)
   const currentNeuronId: string = useAppSelector(state => state.currenNeuronId)
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters 
         className="flex flex-row p-4 cursor-pointer"
         onClick={() => dispatch(changeExpanded({ id: props.neuron.id }))}
       >
-        <div className="font-bold text-primary">Neuron</div>
+        <div className="font-bold text-primary">Neuron {props.index + 1}</div>
         <div className="flex-1 text-right text-gray-500">{"~" + finalReward + " ICP"}</div>
         {props.neuron.id === currentNeuronId ? <ExpandLess /> : <ExpandMore />}
       </div>

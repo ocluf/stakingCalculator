@@ -7,7 +7,7 @@ type SliceState = {
   neurons: Array<NeuronType>
   globalParameters: GlobalParameters
   currenNeuronId: string | null
-  //largeScreen: boolean
+  showAdvanced: boolean
 }
 const initialGlobalParamaters: GlobalParameters = {
   stakedPerc: 90,
@@ -30,17 +30,13 @@ const createNeuron: Function = (globalParameters: GlobalParameters): NeuronType 
 }
 
 const initialNeuron = createNeuron(initialGlobalParamaters)
-// let mql = typeof window !== "undefined" && window.matchMedia("(min-width: 600px)")
-// typeof window !== "undefined" &&
-//   mql.addEventListener("change", mql => {
-//     store.dispatch(setScreenSize(mql.matches))
-//   })
 
 const initialState: SliceState = {
   neurons: [initialNeuron],
   globalParameters: initialGlobalParamaters,
   //largeScreen: typeof window !== "undefined" && mql.matches,
   currenNeuronId: initialNeuron.id,
+  showAdvanced: false,
 }
 
 interface NeuronNumberUpdate {
@@ -117,6 +113,9 @@ const neuronSlice = createSlice({
         return { ...neuron, data: calculateDataPoints(neuron, action.payload) }
       })
     },
+    toggleAdvanced: state => {
+      state.showAdvanced = !state.showAdvanced
+    },
   },
 })
 
@@ -129,11 +128,14 @@ export const {
   changeExpanded,
   setScreenSize,
   changeGlobalParameters,
+  toggleAdvanced,
 } = neuronSlice.actions
 
 export const store = configureStore({
   reducer: neuronSlice.reducer,
 })
+
+export const standardGlobalParameters = initialGlobalParamaters
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

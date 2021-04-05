@@ -12,8 +12,8 @@ const Neurons = () => {
 
   return (
     <div className="w-lg">
-      {neurons.map(neuron => (
-        <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters}></Neuron>
+      {neurons.map((neuron, index) => (
+        <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters} index={index}></Neuron>
       ))}
       <div className="mx-5 max-w-lg shadow-lg"></div>
     </div>
