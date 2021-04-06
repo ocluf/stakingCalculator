@@ -34,6 +34,7 @@ const App = () => {
       <Neurons></Neurons>
       <AdvancedSettings></AdvancedSettings>
       <TotalResult></TotalResult>
+      <div className="h-bottombar"></div>
       <MobileBottomBar></MobileBottomBar>
     </>
   )

@@ -82,7 +82,7 @@ const AdvancedSettings = () => {
                     defaultValue={5}
                   />
                   <StateLessPercentageSlider
-                    title={"Avg. dissolve delay of all neurons"}
+                    title={"Avg. dissolve delay"}
                     value={newGlobalParameters.averageDissolveDelay}
                     onChange={(x: number) =>
                       setNewGlobalParameters({ ...newGlobalParameters, averageDissolveDelay: x })
