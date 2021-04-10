@@ -24,6 +24,7 @@ const createNeuron: Function = (globalParameters: GlobalParameters): NeuronType 
     lockupPeriod: 5,
     startDate: new Date().getTime(),
     data: [],
+    checked: true,
   }
   initialNeuron = { ...initialNeuron, data: calculateDataPoints(initialNeuron, globalParameters) }
   return initialNeuron
@@ -34,7 +35,6 @@ const initialNeuron = createNeuron(initialGlobalParamaters)
 const initialState: SliceState = {
   neurons: [initialNeuron],
   globalParameters: initialGlobalParamaters,
-  //largeScreen: typeof window !== "undefined" && mql.matches,
   currenNeuronId: initialNeuron.id,
   showAdvanced: false,
 }
@@ -104,13 +104,19 @@ const neuronSlice = createSlice({
         state.currenNeuronId = action.payload.id
       }
     },
-    setScreenSize: (state, action: PayloadAction<boolean>) => {
-      //state.largeScreen = action.payload
-    },
     changeGlobalParameters: (state, action: PayloadAction<GlobalParameters>) => {
       state.globalParameters = action.payload
       state.neurons = state.neurons.map(neuron => {
         return { ...neuron, data: calculateDataPoints(neuron, action.payload) }
+      })
+    },
+    toggleChecked: (state, action: PayloadAction<string>) => {
+      state.neurons.map(neuron => {
+        if (neuron.id === action.payload) {
+          return { ...neuron, checked: !neuron.checked }
+        } else {
+          return neuron
+        }
       })
     },
     toggleAdvanced: state => {
@@ -126,9 +132,9 @@ export const {
   changeLockupPeriod,
   changeStartDate,
   changeExpanded,
-  setScreenSize,
   changeGlobalParameters,
   toggleAdvanced,
+  toggleChecked,
 } = neuronSlice.actions
 
 export const store = configureStore({

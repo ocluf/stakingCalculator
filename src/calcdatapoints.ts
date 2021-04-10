@@ -52,8 +52,11 @@ const daysSinceGenesis = (date: Date) => {
   return Math.ceil(difference / (1000 * 3600 * 24))
 }
 
+const dayMs = 1000 * 60 * 60 * 24
+
 const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters) => {
   const datapoints = []
+  let earnedStake = 0
   if (isNaN(neuron.stakeSize)) {
     return [{ x: "year 0", y: 0 }]
   }
@@ -61,11 +64,11 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
   const daysPastGenesis = daysSinceGenesis(new Date(neuron.startDate)) // fix this hack
   let summedMaturity = 0
   const totalLockupPeriod = neuron.lockupPeriod * 365
-  let currentDisolvePeriod = neuron.lockupPeriod * 365.25
+  let daysRemaining = neuron.lockupPeriod * 365.25
 
   for (let i = 0; i < totalLockupPeriod; i++) {
     const currentDayPastGenesis = daysPastGenesis + i
-    let currentDissolveDelay = Math.min(currentDisolvePeriod, 2922)
+    let currentDissolveDelay = Math.min(daysRemaining, 2922)
     const averageMaturity = Math.min(globalParameters.averageMaturityLevel * 365, currentDayPastGenesis)
     // TODO add average dissolve delay to parameters
     // TODO dissolve delay should decrease to the end
@@ -98,14 +101,15 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
     }
 
     summedMaturity += maturityIncrease
-    currentDisolvePeriod--
+    daysRemaining--
 
     if (i % 364 === 0) {
+      const y = summedMaturity * neuron.stakeSize - earnedStake
       datapoints.push({
-        x: "year " + i / 364,
-        y: summedMaturity * neuron.stakeSize,
-        days: currentDayPastGenesis,
+        x: neuron.startDate + i * dayMs,
+        y: y,
       })
+      earnedStake += y
     }
   }
   return datapoints

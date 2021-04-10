@@ -14,7 +14,7 @@ const AdvancedSettings = () => {
   const globalParameters = useAppSelector(state => state.globalParameters)
   const [newGlobalParameters, setNewGlobalParameters] = useState<GlobalParameters>({ ...globalParameters })
   const dispatch = useDispatch()
-  // https://www.tailwindtoolbox.com/components/modal
+
   return (
     <>
       {show ? (
@@ -26,7 +26,7 @@ const AdvancedSettings = () => {
             <div className="modal-content py-4 text-left px-6">
               {/* <!--Title--> */}
               <div className="flex justify-between items-center">
-                <p className="text-2xl font-bold">Advanced settings</p>
+                <p className="text-2xl font-medium">Advanced settings</p>
                 <div
                   className="modal-close cursor-pointer z-50"
                   onClick={() => {
@@ -48,7 +48,7 @@ const AdvancedSettings = () => {
 
               <div className="bg-white inset-0">
                 <div className="bg-white rounded-lg flex w-full p-4"></div>
-                <div className="flex flex-col w-full space-y-4 pb-4 px-4">
+                <div className="flex flex-col w-full space-y-4 pb-4">
                   <StateLessPercentageSlider
                     title="% locked inside voting neurons"
                     value={newGlobalParameters.stakedPerc}

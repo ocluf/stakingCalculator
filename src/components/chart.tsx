@@ -1,11 +1,57 @@
 import React from "react"
 import { ResponsiveLine } from "@nivo/line"
+import { useAppSelector } from "../redux/hooks"
+import Neurons from "./Neurons"
 
 const tooltip = input => {
   return <div className="bg-white border-black border-2 p-1 rounded-xl">{input.point.data.yFormatted} ICP</div>
 }
 
 const Chart = (props: { data }) => {
+  const neurons = useAppSelector(state => state.neurons)
+
+  const yearMs = 1000 * 60 * 60 * 24 * 365
+
+  const lowestCheckedStartDate: number = neurons.reduce((acc, neuron) => {
+    return neuron.checked ? Math.min(acc, neuron.startDate) : acc
+  }, Infinity)
+
+  const highestCheckedEndDate: number = neurons.reduce((acc, neuron) => {
+    return neuron.checked ? Math.max(acc, neuron.startDate + neuron.lockupPeriod * yearMs) : acc
+  }, 0)
+
+  const nrOfYears: number = Math.ceil((highestCheckedEndDate - lowestCheckedStartDate) / yearMs)
+
+  interface Bucket {
+    year: number
+    timestamp: number
+    value: number
+  }
+
+  let yearlyBuckets: Array<Bucket> = []
+  for (let i = 0; i < nrOfYears; i++) {
+    yearlyBuckets.push({
+      year: i,
+      timestamp: lowestCheckedStartDate + i * yearMs,
+      value: 0,
+    })
+  }
+
+  const putInBucket = (timestamp: number, value: number) => {
+    const bucketIndex = yearlyBuckets.findIndex(bucket => bucket.timestamp >= timestamp)
+    if (bucketIndex === -1) {
+      console.error("should find at least one bucket")
+      return
+    }
+    const oldBucket = yearlyBuckets[bucketIndex]
+    const newBucket = { ...oldBucket, value: oldBucket.value + value }
+    yearlyBuckets[bucketIndex] = newBucket
+  }
+
+  neurons
+    .filter(neuron => neuron.checked)
+    .forEach(neuron => neuron.data.forEach(dataPoint => putInBucket(dataPoint.x, dataPoint.y)))
+
   const chartData = [
     {
       id: "return",

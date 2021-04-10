@@ -7,14 +7,19 @@ module.exports = {
   },
   theme: {
     extend: {
-      width: {
-        addButton: "56px"
+      spacing: {
+        dashboard: "760px",
+        chart: "712px"
       },
       height: {
-        bottombar: '56px'
+        bottombar: '56px',
+        chart: "300px"
       },
       minWidth: {
         '300': '300px',
+      },
+      minHeight: {
+        dashboard: "800px"
       },
       maxWidth: {
         "logo": '35px'
@@ -23,10 +28,16 @@ module.exports = {
         "logo": '52px'
       },
       colors: {
+        "ligthGrey": "#F7F7F7",
+        "mediumGrey": "#AEAEAE",
+        "darkGrey": "#5E5E5E",
         "primary": "#4051b5",
         "delete": "#FF000F",
         "blue": "#29ABE2",
         "orange": "#FCB13B"
+      },
+      width: {
+        "neuron": "366px"
       }
     },
   },

@@ -1,7 +1,8 @@
 import React from "react"
 import { useAppSelector } from "../redux/hooks"
 import Banner from "./Banner"
-import Chart from "./chart"
+import Chart from "./Chart"
+import Dashboard from "./Dashboard"
 import AdvancedSettings from "./input/AdvancedSettings"
 import MobileBottomBar from "./MobileBottomBar"
 import Neurons from "./Neurons"
@@ -31,9 +32,12 @@ const App = () => {
   return (
     <>
       <Banner></Banner>
-      <Neurons></Neurons>
+      <div className="lg:flex lg:flex-row">
+        <Neurons></Neurons>
+        <Dashboard></Dashboard>
+      </div>
       <AdvancedSettings></AdvancedSettings>
-      <TotalResult></TotalResult>
+      {/* <TotalResult></TotalResult> */}
       <div className="h-bottombar"></div>
       <MobileBottomBar></MobileBottomBar>
     </>

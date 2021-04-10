@@ -4,41 +4,85 @@ import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import React from "react"
 import { useDispatch } from "react-redux"
-import Chart from "./chart"
+import Chart from "./Chart"
 import { useAppSelector } from "../redux/hooks"
 import { changeExpanded, deleteNeuron } from "../redux/store"
 import { GlobalParameters, NeuronType } from "../types"
 import StakePeriodInput from "./input/StakePeriodInput"
 import StakeSizeInput from "./input/StakeSizeInput"
 import StartDateInput from "./input/StartDateInput"
+import longArrow from "../../static/longArrow.svg"
+import { Divider } from "material-ui"
 
 const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters; index: number }) => {
   //const largeScreen: boolean = useAppSelector(state => state.largeScreen)
   const currentNeuronId: string = useAppSelector(state => state.currenNeuronId)
   const dispatch = useDispatch()
   const dataLength: number = props.neuron.data.length
-  const finalReward: string = dataLength > 0 ? props.neuron.data[dataLength - 1].y.toFixed(2) : "0"
+  const finalReward: number =
+    dataLength > 0
+      ? props.neuron.data.reduce((acc, dataPoint) => {
+          return acc + dataPoint.y
+        }, 0)
+      : 0
+  const finalRewardString: string = finalReward.toFixed(2)
+
+  const ResultCard = (props: {
+    initialStake: number
+    finalReward: number
+    conversionRate: number
+    stakePeriod: number
+  }) => {
+    const finalICP = props.initialStake + props.finalReward
+
+    return (
+      <div className="bg-ligthGrey p-4">
+        <div className="flex flex-row mb-5">
+          <div className="mr-5">
+            <div className="font-bold text-xl">{props.initialStake.toFixed(2)}</div>
+            <div className="text-darkGrey font-light italic">
+              ${(props.initialStake * props.conversionRate).toFixed(2)}
+            </div>
+          </div>
+          <img src={longArrow} className="w-16 mx-auto -mt-5" />
+          <div className="ml-5">
+            <div className="font-bold text-xl text-blue">{finalICP.toFixed(2)}</div>
+            <div className="text-darkGrey font-light italic text-right">
+              ${(finalICP * props.conversionRate).toFixed(2)}
+            </div>
+          </div>
+        </div>
+        <div className="text-darkGrey">
+          Given the ICP price of ${props.conversionRate} USD, the value of your original stake would be worth $
+          {(finalICP * props.conversionRate).toFixed(2)} after {props.stakePeriod} years.
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="bg-white max-w-lg m-5 rounded-lg shadow-lg">
+    <div className="bg-white w-neuron m-5 bottom-0 rounded-lg shadow-lg">
       <div
-        className="flex flex-row p-4 cursor-pointer"
+        className="flex flex-row items-baseline p-4 cursor-pointer"
         onClick={() => dispatch(changeExpanded({ id: props.neuron.id }))}
       >
-        <div className="font-bold text-primary">Neuron {props.index + 1}</div>
-        <div className="flex-1 text-right text-gray-500">{"~" + finalReward + " ICP"}</div>
-        {props.neuron.id === currentNeuronId ? <ExpandLess /> : <ExpandMore />}
+        <div className="font-medium text-lg ">Neuron {props.index + 1}</div>
+        <div className="flex-1 text-left ml-5 text-mediumGrey">{finalRewardString + " ICP"}</div>
+        <div>{props.neuron.id === currentNeuronId ? <ExpandLess /> : <ExpandMore />}</div>
       </div>
       <Collapse in={props.neuron.id === currentNeuronId} unmountOnExit timeout="auto">
-        <div className="w-auto h-auto m-2 p-4 flex flex-shrink-0 flex-col max-w-lg">
+        <div className="w-auto h-auto m-2 p-4 flex flex-col space-y-5 max-w-lg">
           <StakeSizeInput neuronId={props.neuron.id} stakeSize={props.neuron.stakeSize}></StakeSizeInput>
           <StartDateInput neuronId={props.neuron.id} startDate={props.neuron.startDate}></StartDateInput>
           <StakePeriodInput neuronId={props.neuron.id} lockupPeriod={props.neuron.lockupPeriod}></StakePeriodInput>
-          <div className="w-auto h-96 sm:invisible sm:h-0">
-            <Chart data={props.neuron.data}></Chart>
-          </div>
+          <ResultCard
+            initialStake={props.neuron.stakeSize}
+            finalReward={finalReward}
+            conversionRate={2}
+            stakePeriod={props.neuron.lockupPeriod}
+          ></ResultCard>
           <div
-            className="font-semibold text-delete ml-auto pt-2 cursor-pointer"
+            className="font-medium text-delete ml-auto pt-2 cursor-pointer"
             onClick={() => dispatch(deleteNeuron({ id: props.neuron.id }))}
           >
             DELETE NEURON

@@ -6,6 +6,7 @@ export interface NeuronType {
   startDate: number
   lockupPeriod: number // number of years
   data: Array<Datapoint>
+  checked: boolean
 }
 
 export interface CalculatorParameters {
@@ -23,7 +24,7 @@ export interface GlobalParameters {
 }
 
 export interface Datapoint {
-  x: string
+  x: number
   y: number
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Slider from "@material-ui/core/Slider"
+import { makeStyles, styled, withStyles } from "@material-ui/core"
 
 const PercentageSlider = (props: {
   percentage: number
@@ -29,8 +30,9 @@ const PercentageSlider = (props: {
         max={props.max}
         step={props.step}
         value={value}
+        color="primary"
         onChangeCommitted={(e, value) => props.setPerc(value)}
-        onChange={(e, value) => setValue(value)} //TODO handle type error
+        onChange={(e, value) => setValue(value)}
         aria-labelledby="percentage slider"
       />
     </div>
