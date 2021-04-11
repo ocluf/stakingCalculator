@@ -1,4 +1,4 @@
-import { CalculatorParameters, GlobalParameters, NeuronType } from "./types"
+import { Bucket, CalculatorParameters, GlobalParameters, NeuronType } from "./types"
 
 interface Neuron {
   age_days: number
@@ -11,7 +11,7 @@ function nominal_voting_rewards_available_today(icp_supply: number, days_since_g
   const day = Math.min(days_since_genesis, 2922)
   const as_perc_of_annual = 0.05 + 0.05 * ((2922 - day) / 2922) ** 2
 
-  return (icp_supply * as_perc_of_annual) / 365.25
+  return (icp_supply * as_perc_of_annual) / 365
 }
 
 function get_neuron_relative_max_rewards(n: Neuron): number {
@@ -64,7 +64,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
   const daysPastGenesis = daysSinceGenesis(new Date(neuron.startDate)) // fix this hack
   let summedMaturity = 0
   const totalLockupPeriod = neuron.lockupPeriod * 365
-  let daysRemaining = neuron.lockupPeriod * 365.25
+  let daysRemaining = neuron.lockupPeriod * 365
 
   for (let i = 0; i < totalLockupPeriod; i++) {
     const currentDayPastGenesis = daysPastGenesis + i
@@ -83,7 +83,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
       {
         age_days: averageMaturity,
         locked_ICP: (globalParameters.totalSupply * globalParameters.stakedPerc) / 100,
-        dissolve_delay: globalParameters.averageDissolveDelay * 365.25,
+        dissolve_delay: globalParameters.averageDissolveDelay * 365,
       },
     ]
 
@@ -113,6 +113,87 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
     }
   }
   return datapoints
+}
+
+const yearMs = 1000 * 60 * 60 * 24 * 365
+
+const getLowestCheckedStartDate = (neurons: Array<NeuronType>): number =>
+  neurons.reduce((acc, neuron) => {
+    return neuron.checked ? Math.min(acc, neuron.startDate) : acc
+  }, Infinity)
+
+const getHighestCheckedEndDate = (neurons: Array<NeuronType>): number =>
+  neurons.reduce((acc, neuron) => {
+    return neuron.checked ? Math.max(acc, neuron.startDate + neuron.lockupPeriod * yearMs) : acc
+  }, 0)
+
+export const getTotalCheckedStake = (neurons: Array<NeuronType>): number =>
+  neurons.reduce((acc, neuron) => acc + (neuron.checked ? neuron.stakeSize : 0), 0)
+
+export const getTotalCheckedReturn = (neurons: Array<NeuronType>): number =>
+  neurons.reduce(
+    (acc, neuron) =>
+      acc +
+      (neuron.data.length > 1 && neuron.checked ? neuron.data.reduce((acc, datapoint) => acc + datapoint.y, 0) : 0),
+    0
+  )
+
+const getNrYears = (lowestCheckedStartDate: number, highestCheckedEndDate: number) => {
+  return Math.ceil((highestCheckedEndDate - lowestCheckedStartDate) / yearMs)
+}
+
+export const getNrYearsFromNeurons = (neurons: Array<NeuronType>) => {
+  return getNrYears(getLowestCheckedStartDate(neurons), getHighestCheckedEndDate(neurons))
+}
+
+export const calculateCombinedDatapoints = (neurons: Array<NeuronType>) => {
+  const lowestCheckedStartDate: number = getLowestCheckedStartDate(neurons)
+
+  const highestCheckedEndDate: number = getHighestCheckedEndDate(neurons)
+
+  const totalStake = getTotalCheckedStake(neurons)
+
+  const nrOfYears: number = getNrYears(lowestCheckedStartDate, highestCheckedEndDate)
+
+  let yearlyBuckets: Array<Bucket> = []
+  for (let i = 0; i < nrOfYears + 1; i++) {
+    yearlyBuckets.push({
+      year: i,
+      timestamp: lowestCheckedStartDate + i * yearMs,
+      value: 0,
+    })
+  }
+
+  const putInBucket = (timestamp: number, value: number) => {
+    const bucketIndex = yearlyBuckets.findIndex(bucket => bucket.timestamp >= timestamp)
+    if (bucketIndex === -1) {
+      console.error("should find at least one bucket")
+      return
+    }
+    const oldBucket = yearlyBuckets[bucketIndex]
+    const newBucket = { ...oldBucket, value: oldBucket.value + value }
+    yearlyBuckets[bucketIndex] = newBucket
+  }
+
+  neurons
+    .filter(neuron => neuron.checked)
+    .forEach(neuron => neuron.data.forEach(dataPoint => putInBucket(dataPoint.x, dataPoint.y)))
+
+  const finalData = yearlyBuckets
+    .filter(bucket => bucket.value !== 0)
+    .map(bucket => {
+      return { x: bucket.year, y: bucket.value }
+    })
+    .map(
+      (sum => datapoint => {
+        return { ...datapoint, y: (sum += datapoint.y) }
+      })(0)
+    )
+    .map(datapoint => {
+      return { ...datapoint, y: datapoint.y + totalStake }
+    })
+
+  return finalData
 }
 
 export default createDataPoints

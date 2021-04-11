@@ -8,6 +8,7 @@ type SliceState = {
   globalParameters: GlobalParameters
   currenNeuronId: string | null
   showAdvanced: boolean
+  exchangeRate: number
 }
 const initialGlobalParamaters: GlobalParameters = {
   stakedPerc: 90,
@@ -17,12 +18,21 @@ const initialGlobalParamaters: GlobalParameters = {
   averageMaturityLevel: 2,
 }
 
+const getRoundedDownDate = () => {
+  let date = new Date()
+  date.setHours(0)
+  date.setMinutes(0)
+  date.setSeconds(0)
+  date.setMilliseconds(0)
+  return date.getTime()
+}
+
 const createNeuron: Function = (globalParameters: GlobalParameters): NeuronType => {
   let initialNeuron = {
     id: nanoid(),
     stakeSize: 100,
     lockupPeriod: 5,
-    startDate: new Date().getTime(),
+    startDate: getRoundedDownDate(),
     data: [],
     checked: true,
   }
@@ -37,6 +47,7 @@ const initialState: SliceState = {
   globalParameters: initialGlobalParamaters,
   currenNeuronId: initialNeuron.id,
   showAdvanced: false,
+  exchangeRate: 4.2,
 }
 
 interface NeuronNumberUpdate {
@@ -111,12 +122,17 @@ const neuronSlice = createSlice({
       })
     },
     toggleChecked: (state, action: PayloadAction<string>) => {
-      state.neurons.map(neuron => {
+      state.neurons = state.neurons.map(neuron => {
         if (neuron.id === action.payload) {
           return { ...neuron, checked: !neuron.checked }
         } else {
           return neuron
         }
+      })
+    },
+    toggleGlobalChecked: (state, action: PayloadAction<boolean>) => {
+      state.neurons = state.neurons.map(neuron => {
+        return { ...neuron, checked: action.payload }
       })
     },
     toggleAdvanced: state => {
@@ -135,6 +151,7 @@ export const {
   changeGlobalParameters,
   toggleAdvanced,
   toggleChecked,
+  toggleGlobalChecked,
 } = neuronSlice.actions
 
 export const store = configureStore({

@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import Slider from "@material-ui/core/Slider"
-import { makeStyles, styled, withStyles } from "@material-ui/core"
 
 const PercentageSlider = (props: {
   percentage: number

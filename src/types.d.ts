@@ -28,13 +28,6 @@ export interface Datapoint {
   y: number
 }
 
-export interface NeuronTypeOld {
-  params: CalculatorParameters
-  data: Array<Datapoint>
-  index: number
-  id: string
-}
-
 export interface ResultData {
   stake: number
   reward: number | null

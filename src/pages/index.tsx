@@ -21,11 +21,3 @@ export default function Home() {
     </Provider>
   )
 }
-{
-  /* <div>
-<Banner />
-<div className="flex flex-col p-3 space-y-4 max-w-lg mx-auto">
-  <Neurons initialId={Math.random().toString()} />
-</div>
-</div> */
-}

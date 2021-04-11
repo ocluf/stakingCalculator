@@ -1,10 +1,8 @@
 import { Collapse } from "@material-ui/core"
-import Button from "@material-ui/core/Button"
 import ExpandLess from "@material-ui/icons/ExpandLess"
 import ExpandMore from "@material-ui/icons/ExpandMore"
 import React from "react"
 import { useDispatch } from "react-redux"
-import Chart from "./Chart"
 import { useAppSelector } from "../redux/hooks"
 import { changeExpanded, deleteNeuron } from "../redux/store"
 import { GlobalParameters, NeuronType } from "../types"
@@ -15,8 +13,8 @@ import longArrow from "../../static/longArrow.svg"
 import { Divider } from "material-ui"
 
 const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters; index: number }) => {
-  //const largeScreen: boolean = useAppSelector(state => state.largeScreen)
   const currentNeuronId: string = useAppSelector(state => state.currenNeuronId)
+  const exchangeRate: number = useAppSelector(state => state.exchangeRate)
   const dispatch = useDispatch()
   const dataLength: number = props.neuron.data.length
   const finalReward: number =
@@ -30,7 +28,7 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
   const ResultCard = (props: {
     initialStake: number
     finalReward: number
-    conversionRate: number
+    exchangeRate: number
     stakePeriod: number
   }) => {
     const finalICP = props.initialStake + props.finalReward
@@ -41,20 +39,20 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
           <div className="mr-5">
             <div className="font-bold text-xl">{props.initialStake.toFixed(2)}</div>
             <div className="text-darkGrey font-light italic">
-              ${(props.initialStake * props.conversionRate).toFixed(2)}
+              ${(props.initialStake * props.exchangeRate).toFixed(2)}
             </div>
           </div>
           <img src={longArrow} className="w-16 mx-auto -mt-5" />
           <div className="ml-5">
             <div className="font-bold text-xl text-blue">{finalICP.toFixed(2)}</div>
             <div className="text-darkGrey font-light italic text-right">
-              ${(finalICP * props.conversionRate).toFixed(2)}
+              ${(finalICP * props.exchangeRate).toFixed(2)}
             </div>
           </div>
         </div>
         <div className="text-darkGrey">
-          Given the ICP price of ${props.conversionRate} USD, the value of your original stake would be worth $
-          {(finalICP * props.conversionRate).toFixed(2)} after {props.stakePeriod} years.
+          Given the ICP price of ${props.exchangeRate} USD, the value of your original stake would be worth $
+          {(finalICP * props.exchangeRate).toFixed(2)} after {props.stakePeriod} years.
         </div>
       </div>
     )
@@ -78,7 +76,7 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
           <ResultCard
             initialStake={props.neuron.stakeSize}
             finalReward={finalReward}
-            conversionRate={2}
+            exchangeRate={exchangeRate}
             stakePeriod={props.neuron.lockupPeriod}
           ></ResultCard>
           <div

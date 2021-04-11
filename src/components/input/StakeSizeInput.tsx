@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import FormattedTextInput from "./FormattedTextInput"
 import { changeStakeSize } from "../../redux/store"
 import { useDispatch } from "react-redux"
-import Neuron from "../Neuron"
 
 const StakeSizeInput = (props: { neuronId: string; stakeSize: number }) => {
   const [value, setValue] = useState<string>(props.stakeSize.toString())

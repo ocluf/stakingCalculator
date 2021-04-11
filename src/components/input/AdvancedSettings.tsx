@@ -1,12 +1,8 @@
-import Collapse from "@material-ui/core/Collapse"
-import ExpandLess from "@material-ui/icons/ExpandLess"
-import ExpandMore from "@material-ui/icons/ExpandMore"
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "../../redux/hooks"
 import { changeGlobalParameters, standardGlobalParameters, toggleAdvanced } from "../../redux/store"
 import { GlobalParameters } from "../../types"
-import PercentageSlider from "./PercentageSlider"
 import StateLessPercentageSlider from "./StateLessPercSlider"
 
 const AdvancedSettings = () => {

@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        twopx: "2px",
         dashboard: "760px",
         chart: "712px"
       },
@@ -29,6 +30,7 @@ module.exports = {
       },
       colors: {
         "ligthGrey": "#F7F7F7",
+        "checkboxGrey": "#999999",
         "mediumGrey": "#AEAEAE",
         "darkGrey": "#5E5E5E",
         "primary": "#4051b5",
