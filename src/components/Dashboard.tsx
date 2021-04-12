@@ -89,6 +89,7 @@ const ReturnStatistics = () => {
 const DashBoard = () => {
   return (
     <div className="hidden bg-white mt-5 p-5 w-dashboard min-h-dashboard shadow-lg rounded-lg lg:block">
+      <div className="font-medium text-lg"> Your stake over time</div>
       <NeuronSelector></NeuronSelector>
       <Chart />
       <ReturnStatistics />

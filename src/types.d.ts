@@ -14,7 +14,11 @@ export interface CalculatorParameters {
   lockupPeriod: number
   startDate: Date
 }
-
+export interface Bucket {
+  year: number
+  timestamp: number
+  value: number
+}
 export interface GlobalParameters {
   stakedPerc: number
   averageMaturityLevel: number
