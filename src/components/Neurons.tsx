@@ -7,10 +7,12 @@ const Neurons = () => {
   const globalParameters = useAppSelector(state => state.globalParameters)
 
   return (
-    <div className="w-max mx-auto">
-      {neurons.map((neuron, index) => (
-        <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters} index={index}></Neuron>
-      ))}
+    <div>
+      <div className="w-max mx-auto">
+        {neurons.map((neuron, index) => (
+          <Neuron key={neuron.id} neuron={neuron} globalParameters={globalParameters} index={index}></Neuron>
+        ))}
+      </div>
     </div>
   )
 }

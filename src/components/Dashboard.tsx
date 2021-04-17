@@ -128,8 +128,8 @@ const ReturnTable = (props: { stakeSize: number; startDate: Date; data: any }) =
 
 const DashBoard = () => {
   return (
-    <div>
-      <div className="bg-white mt-5 mx-auto p-5 w-neuron lg:w-dashboard shadow-lg rounded-lg lg:block">
+    <div className="max-w-dashboard flex-1">
+      <div className="bg-white mt-5 mx-auto p-5 w-neuron lg:w-auto lg:ml-0 lg:mr-5 lg:max-w-dashboard shadow-lg rounded-lg lg:block">
         <div className="font-medium text-lg mb-4"> Your stake over time</div>
         <NeuronSelector></NeuronSelector>
         <Chart />

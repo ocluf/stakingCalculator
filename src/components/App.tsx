@@ -14,7 +14,7 @@ const App = () => {
     <>
       <SEO></SEO>
       <Banner></Banner>
-      <div className="lg:flex lg:flex-row lg:mx-auto lg:w-max">
+      <div className="lg:flex lg:flex-row lg:w-full lg:justify-center">
         <Neurons></Neurons>
         <Dashboard></Dashboard>
       </div>
