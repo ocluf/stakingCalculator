@@ -1,7 +1,14 @@
+import { TableRow } from "@material-ui/core"
 import Checkbox from "@material-ui/core/Checkbox"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableCell from "@material-ui/core/TableCell"
+import TableContainer from "@material-ui/core/TableContainer"
+import TableHead from "@material-ui/core/TableHead"
 import Alert from "@material-ui/lab/Alert/Alert"
+import Paper from "material-ui/Paper"
 
-import React from "react"
+import React, { Fragment } from "react"
 import { useDispatch } from "react-redux"
 import { getNrYearsFromNeurons, getTotalCheckedReturn, getTotalCheckedStake } from "../calcdatapoints"
 import { useAppSelector } from "../redux/hooks"
@@ -86,17 +93,60 @@ const ReturnStatistics = () => {
   )
 }
 
+const ReturnTable = (props: { stakeSize: number; startDate: Date; data: any }) => {
+  return (
+    <>
+      {props.data.length > 0 ? (
+        <TableContainer>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell align="center">Total ICP reward</TableCell>
+                <TableCell align="right">ROI%</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.data.map((data, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    {/* {toRelativeDate(data.days).toDateString()} */}
+                  </TableCell>
+                  <TableCell align="center">{index === 0 ? 0 : data.y.toPrecision(3)}</TableCell>
+                  <TableCell align="right">
+                    {index === 0 ? 0 : ((data.y / props.stakeSize) * 100).toPrecision(3) + "%"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : null}
+    </>
+  )
+}
+
 const DashBoard = () => {
   return (
-    <div className="hidden bg-white mt-5 p-5 w-dashboard min-h-dashboard shadow-lg rounded-lg lg:block">
-      <div className="font-medium text-lg"> Your stake over time</div>
-      <NeuronSelector></NeuronSelector>
-      <Chart />
-      <ReturnStatistics />
-      <Alert variant="outlined" severity="error">
-        Actual returns may differ from these projections based on several unknown parameters, to learn more check out
-        the FAQ.
-      </Alert>
+    <div>
+      <div className="hidden bg-white mt-5 p-5 w-dashboard shadow-lg rounded-lg lg:block">
+        <div className="font-medium text-lg"> Your stake over time</div>
+        <NeuronSelector></NeuronSelector>
+        <Chart />
+        <ReturnStatistics />
+        <Alert variant="outlined" severity="error">
+          Actual returns may differ from these projections based on several unknown parameters, to learn more check out
+          the FAQ.
+        </Alert>
+        <a
+          className="twitter-share-button"
+          href="https://twitter.com/intent/tweet?text=Hello%20world"
+          data-size="large"
+        >
+          Tweet
+        </a>
+        <a href="https://t.me/share/url?url={url}&text={text}">telegram</a>
+      </div>
     </div>
   )
 }

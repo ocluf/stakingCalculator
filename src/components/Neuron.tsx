@@ -51,7 +51,7 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
           </div>
         </div>
         <div className="text-darkGrey">
-          Given the ICP price of ${props.exchangeRate} USD, the value of your original stake would be worth $
+          Given the ICP price of ${props.exchangeRate.toFixed(2)} USD, the value of your original stake would be worth $
           {(finalICP * props.exchangeRate).toFixed(2)} after {props.stakePeriod} years.
         </div>
       </div>

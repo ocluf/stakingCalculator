@@ -5,6 +5,12 @@
  */
 
 module.exports = {
-  /* Your site config here */
-  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-postcss`],
+  flags: { PRESERVE_WEBPACK_CACHE: true },
+  siteMetadata: {
+    title: "ICP Neuron Calculator",
+    description: "A calculator to help you calculate your potential return when participating in the Network Nervous System.",
+    url: "https://angry-davinci-aaea5b.netlify.app",
+    image: "logo.svg"
+  },
+  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-postcss`, `gatsby-plugin-react-helmet`],
 }

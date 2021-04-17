@@ -6,8 +6,6 @@ import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
-import { Datapoint } from "../types/types"
-import { Star } from "@material-ui/icons"
 
 const ReturnTable = (props: { stakeSize: number; startDate: Date; data: any }) => {
   const toRelativeDate = (nrOfDays: number): Date => {

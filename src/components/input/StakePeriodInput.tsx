@@ -17,7 +17,7 @@ const stakePeriodInput = (props: { neuronId: string; lockupPeriod: number }) => 
       setPerc={setLockupPeriod}
       postfix={props.lockupPeriod > 1 ? " years" : " year"}
       min={1}
-      max={10}
+      max={20}
       step={1}
       defaultValue={5}
     />
