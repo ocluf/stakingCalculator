@@ -2,8 +2,8 @@ import NumberFormat from "react-number-format"
 
 export interface NeuronType {
   id: string
-  stakeSize: number
-  startDate: number
+  stakeSize: number // unix timestamp
+  startDate: number // unix timestamp
   lockupPeriod: number // number of years
   data: Array<Datapoint>
   checked: boolean
@@ -21,9 +21,9 @@ export interface Bucket {
 }
 export interface GlobalParameters {
   stakedPerc: number
-  averageMaturityLevel: number
-  votingPerc: number
-  averageDissolveDelay: number
+  averageMaturityLevel: number // years
+  votingPerc: number // perc of proposals you vote on yourself
+  averageDissolveDelay: number // years
   totalSupply: number
 }
 

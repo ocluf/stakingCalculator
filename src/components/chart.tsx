@@ -11,6 +11,7 @@ const Chart = () => {
   const neurons = useAppSelector(state => state.neurons)
 
   const finalData = calculateCombinedDatapoints(neurons)
+  const numberLength = finalData.length > 0 ? Math.ceil(finalData[finalData.length - 1].y).toString().length : 0
 
   const chartData = [
     {
@@ -21,7 +22,7 @@ const Chart = () => {
   ]
 
   return (
-    <div className="w-chart h-chart">
+    <div className="hidden lg:block w-auto h-chart max-w-chart max-h-chart mx-auto">
       <ResponsiveLine
         data={chartData}
         colors="#29ABE2"
@@ -51,8 +52,8 @@ const Chart = () => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Stake (ICP)",
-          legendOffset: -40,
+          legend: numberLength > 4 ? "" : "Stake (ICP)",
+          legendOffset: -35 + -numberLength * 2,
           legendPosition: "middle",
         }}
         pointSize={10}

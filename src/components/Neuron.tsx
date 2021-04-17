@@ -65,7 +65,9 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
         onClick={() => dispatch(changeExpanded({ id: props.neuron.id }))}
       >
         <div className="font-medium text-lg ">Neuron {props.index + 1}</div>
-        <div className="flex-1 text-left ml-5 text-mediumGrey">{finalRewardString + " ICP"}</div>
+        <div className="flex-1 text-left ml-5 text-mediumGrey">
+          {props.neuron.stakeSize + " ICP / " + props.neuron.lockupPeriod + " yr."}
+        </div>
         <div>{props.neuron.id === currentNeuronId ? <ExpandLess /> : <ExpandMore />}</div>
       </div>
       <Collapse in={props.neuron.id === currentNeuronId} unmountOnExit timeout="auto">

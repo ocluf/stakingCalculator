@@ -25,7 +25,7 @@ const GlobalCheckBox = (props: { allChecked: boolean; allUnchecked: boolean }) =
         onClick={() => dispatch(toggleGlobalChecked(!props.allChecked))}
         color="primary"
       />
-      <div className="w-twopx h-full bg-checkboxGrey"></div>
+      <div className="w-px h-full bg-checkboxGrey fon"></div>
     </div>
   )
 }
@@ -33,7 +33,7 @@ const GlobalCheckBox = (props: { allChecked: boolean; allUnchecked: boolean }) =
 const NeuronCheckbox = (props: { checked: boolean; index: number; neuronId: string }) => {
   const dispatch = useDispatch()
   return (
-    <div className="flex flex-row items-center w-32 mx-2">
+    <div className="flex flex-row items-center w-32 ml-2">
       <Checkbox checked={props.checked} color="primary" onChange={() => dispatch(toggleChecked(props.neuronId))} />
       <div>Neuron {props.index}</div>
     </div>
@@ -60,7 +60,7 @@ const ReturnStatistic = (props: { title: string; main: string; bottom: string })
   return (
     <div>
       <div className="text-sm">{props.title}</div>
-      <div className="text-2xl font-bold">{props.main}</div>
+      <div className="text-4xl font-bold">{props.main}</div>
       <div className="text-lightGrey text-xs opacity-40">{props.bottom}</div>
     </div>
   )
@@ -77,7 +77,7 @@ const ReturnStatistics = () => {
     ? "or 0% annualized"
     : `or ${(roi / getNrYearsFromNeurons(neurons)).toFixed(2)}% annualized`
   return (
-    <div className="flex flex-row space-x-14 w-max my-4 mx-auto">
+    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-14 w-max my-4">
       <ReturnStatistic
         title="Assets locked"
         main={totalStake + " ICP"}
@@ -129,8 +129,8 @@ const ReturnTable = (props: { stakeSize: number; startDate: Date; data: any }) =
 const DashBoard = () => {
   return (
     <div>
-      <div className="hidden bg-white mt-5 p-5 w-dashboard shadow-lg rounded-lg lg:block">
-        <div className="font-medium text-lg"> Your stake over time</div>
+      <div className="bg-white mt-5 mx-auto p-5 w-neuron lg:w-dashboard shadow-lg rounded-lg lg:block">
+        <div className="font-medium text-lg mb-4"> Your stake over time</div>
         <NeuronSelector></NeuronSelector>
         <Chart />
         <ReturnStatistics />
@@ -138,14 +138,14 @@ const DashBoard = () => {
           Actual returns may differ from these projections based on several unknown parameters, to learn more check out
           the FAQ.
         </Alert>
-        <a
+        {/* <a
           className="twitter-share-button"
           href="https://twitter.com/intent/tweet?text=Hello%20world"
           data-size="large"
         >
           Tweet
         </a>
-        <a href="https://t.me/share/url?url={url}&text={text}">telegram</a>
+        <a href="https://t.me/share/url?url={url}&text={text}">telegram</a> */}
       </div>
     </div>
   )

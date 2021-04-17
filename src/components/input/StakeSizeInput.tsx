@@ -33,6 +33,7 @@ const StakeSizeInput = (props: { neuronId: string; stakeSize: number }) => {
       placeholder="The number of ICP in the neuron"
       onChange={e => setValue(e.target.value)}
       isValid={!isValid}
+      endAdornment={"ICP"}
     />
   )
 }

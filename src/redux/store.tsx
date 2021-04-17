@@ -121,6 +121,9 @@ const neuronSlice = createSlice({
         return { ...neuron, data: calculateDataPoints(neuron, action.payload) }
       })
     },
+    changeExchangeRate: (state, action: PayloadAction<number>) => {
+      state.exchangeRate = action.payload
+    },
     toggleChecked: (state, action: PayloadAction<string>) => {
       state.neurons = state.neurons.map(neuron => {
         if (neuron.id === action.payload) {
@@ -149,6 +152,7 @@ export const {
   changeStartDate,
   changeExpanded,
   changeGlobalParameters,
+  changeExchangeRate,
   toggleAdvanced,
   toggleChecked,
   toggleGlobalChecked,

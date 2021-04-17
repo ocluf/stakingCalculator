@@ -30,7 +30,7 @@ const NumberFormatCustom = (props: NumberFormatCustomProps) => {
 }
 
 const FormattedTextInput = (props: any) => {
-  const { onChange, placeholder, id, label, value, isValid }: any = props
+  const { onChange, placeholder, id, label, value, isValid, endAdornment }: any = props
 
   return (
     <TextField
@@ -43,7 +43,7 @@ const FormattedTextInput = (props: any) => {
       placeholder={placeholder}
       InputProps={{
         inputComponent: NumberFormatCustom as any,
-        endAdornment: <InputAdornment position="end">ICP</InputAdornment>,
+        endAdornment: <InputAdornment position="end">{endAdornment}</InputAdornment>,
         autoComplete: "off",
       }}
       onChange={onChange}

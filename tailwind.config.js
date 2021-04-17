@@ -23,7 +23,9 @@ module.exports = {
         dashboard: "800px"
       },
       maxWidth: {
-        "logo": '35px'
+        "logo": '35px',
+        "dashboard": "760px",
+        "smallDashboard": "670px"
       },
       maxHeight: {
         "logo": '52px'
