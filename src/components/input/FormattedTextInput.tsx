@@ -30,7 +30,7 @@ const NumberFormatCustom = (props: NumberFormatCustomProps) => {
 }
 
 const FormattedTextInput = (props: any) => {
-  const { onChange, placeholder, id, label, value, isValid, endAdornment }: any = props
+  const { onChange, placeholder, id, label, value, isValid, endAdornment, helperText }: any = props
 
   return (
     <TextField
@@ -41,6 +41,7 @@ const FormattedTextInput = (props: any) => {
       value={value}
       error={isValid}
       placeholder={placeholder}
+      helperText={helperText}
       InputProps={{
         inputComponent: NumberFormatCustom as any,
         endAdornment: <InputAdornment position="end">{endAdornment}</InputAdornment>,

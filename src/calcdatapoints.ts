@@ -160,7 +160,7 @@ const getLowestCheckedStartDate = (neurons: Array<NeuronType>): number =>
     return neuron.checked ? Math.min(acc, neuron.startDate) : acc
   }, Infinity)
 
-const getHighestCheckedEndDate = (neurons: Array<NeuronType>): number =>
+export const getHighestCheckedEndDate = (neurons: Array<NeuronType>): number =>
   neurons.reduce((acc, neuron) => {
     return neuron.checked ? Math.max(acc, neuron.startDate + neuron.lockupPeriod * yearMs) : acc
   }, 0)

@@ -21,7 +21,7 @@ const FAQItem = (props: { title: string; content: JSX.Element }) => {
   const [open, setOpen] = useState<boolean>(false)
 
   return (
-    <div className="bg-white max-w-lg m-5 rounded-lg shadow-lg">
+    <div className="bg-white max-w-lg lg:max-w-4xl m-5 lg:mx-auto rounded-lg shadow-lg">
       <div className="flex flex-row p-4 cursor-pointer" onClick={() => setOpen(!open)}>
         <div className="font-bold">{props.title}</div>
         <div className="ml-auto">{open ? <ExpandLess /> : <ExpandMore />}</div>

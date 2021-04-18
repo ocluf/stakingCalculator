@@ -10,7 +10,12 @@ import Paper from "material-ui/Paper"
 
 import React, { Fragment } from "react"
 import { useDispatch } from "react-redux"
-import { getNrYearsFromNeurons, getTotalCheckedReturn, getTotalCheckedStake } from "../calcdatapoints"
+import {
+  getHighestCheckedEndDate,
+  getNrYearsFromNeurons,
+  getTotalCheckedReturn,
+  getTotalCheckedStake,
+} from "../calcdatapoints"
 import { useAppSelector } from "../redux/hooks"
 import { toggleChecked, toggleGlobalChecked } from "../redux/store"
 import Chart from "./Chart"
@@ -56,9 +61,9 @@ const NeuronSelector = () => {
   )
 }
 
-const ReturnStatistic = (props: { title: string; main: string; bottom: string }) => {
+const ReturnStatistic = (props: { title: string; main: string; bottom: string; className?: string }) => {
   return (
-    <div>
+    <div className={props.className}>
       <div className="text-sm">{props.title}</div>
       <div className="text-4xl font-bold">{props.main}</div>
       <div className="text-lightGrey text-xs opacity-40">{props.bottom}</div>
@@ -71,17 +76,24 @@ const ReturnStatistics = () => {
   const exchangeRate = useAppSelector(state => state.exchangeRate)
   const totalStake = getTotalCheckedStake(neurons)
   const totalReturn = getTotalCheckedReturn(neurons)
+  const nrOfYears = getNrYearsFromNeurons(neurons)
   const roi = (totalReturn / totalStake) * 100
   const roiString: string = isNaN(roi) ? "0%" : roi.toFixed(2) + "%"
-  const roiBottomString: string = isNaN(roi)
-    ? "or 0% annualized"
-    : `or ${(roi / getNrYearsFromNeurons(neurons)).toFixed(2)}% annualized`
+  const roiBottomString: string = isNaN(roi) ? "or 0% annualized" : `or ${(roi / nrOfYears).toFixed(2)}% annualized`
   return (
     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-14 w-max my-4">
       <ReturnStatistic
         title="Assets locked"
         main={totalStake + " ICP"}
         bottom={"$" + (totalStake * exchangeRate).toFixed(2)}
+      />
+      <ReturnStatistic
+        title="Total Period"
+        main={(isFinite(nrOfYears) ? nrOfYears : "0") + " yr."}
+        bottom={
+          "ending: " + (isFinite(nrOfYears) ? new Date(getHighestCheckedEndDate(neurons)).toLocaleDateString() : "N/A")
+        }
+        className="lg:hidden"
       />
       <ReturnStatistic
         title="Total Return"
@@ -128,7 +140,7 @@ const ReturnTable = (props: { stakeSize: number; startDate: Date; data: any }) =
 
 const DashBoard = () => {
   return (
-    <div className="max-w-dashboard flex-1">
+    <div className="lg:max-w-dashboard flex-1 mb-5">
       <div className="bg-white mt-5 mx-auto p-5 w-neuron lg:w-auto lg:ml-0 lg:mr-5 lg:max-w-dashboard shadow-lg rounded-lg lg:block">
         <div className="font-medium text-lg mb-4"> Your stake over time</div>
         <NeuronSelector></NeuronSelector>
