@@ -70,7 +70,7 @@ function get_neuron_maturity_increase(
   return earned_pie_slice / neuron.locked_ICP
 }
 
-const genesis = new Date(2021, 3, 31) //TODO change once genesis is known.
+const genesis = new Date(2021, 5, 7)
 const dayMs = 1000 * 60 * 60 * 24
 
 /**

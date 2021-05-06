@@ -47,7 +47,7 @@ const Banner = () => {
         <h2 className="text-base bottom-0">Maximize your Vote, Maximize your ICP</h2>
       </div>
       <div className="hidden lg:flex lg:flex-row ml-auto space-x-4 ">
-        {typeof window !== undefined && window.navigator.share !== undefined ? (
+        {typeof window !== "undefined" && window.navigator.share !== undefined ? (
           <img src={shareIcon} onClick={() => shareSite(neurons)} className="ml-auto cursor-pointer" />
         ) : (
           <DesktopShare></DesktopShare>
