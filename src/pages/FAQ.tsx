@@ -68,7 +68,7 @@ const faqItems = [
     ),
   },
   {
-    title: "Are the returns given by the staking calculator garantueed?",
+    title: "Are the returns given by the staking calculator guaranteed?",
     content: (
       <div>
         No, there are multiple unknown factors like: the total number of tokens that will be staked, the average
@@ -90,17 +90,17 @@ const faqItems = [
     title: "What is the starting date input field?",
     content: (
       <div>
-        The starting date input field is the date you lock your ICP into a neuron. The closer that this date is to
-        genesis the more reward you will get initialy.
+        The starting date input field is the date you lock your ICP in a neuron. The closer this date is to
+        genesis the higher the reward you will initially receive.
       </div>
     ),
   },
   {
-    title: "What is the Staking period input fields",
+    title: "What is the staking period input field",
     content: (
       <div>
         The staking period is the total amount of time you want to lock your tokens. During this time you can't get them
-        back The dissolve delay is automatically set the the highest value possible, meaning that for any staking period
+        back. The dissolve delay is automatically set the the highest value possible, meaning that for any staking period
         above 8 years the dissolve delay will be 8 and for lower staking periods the dissolve delay will be the same as
         the staking period.
       </div>
@@ -118,9 +118,8 @@ const faqItems = [
     title: "What does the % of proposals you vote on advanced setting mean?",
     content: (
       <div>
-        This indicates how much of the proposal that come by in the Network Nervous System you vote on. This will impact
-        impact your votes in a linear way meaning that if you vote on 90% of proposals you get 90% of the reward you
-        could have had.
+        This indicates what percentage of the proposals submitted to the Network Nervous System you vote on. This will impact your 
+        rewards in a linear way, meaning that if you vote on 90% of proposals you get 90% of your total possible reward.
       </div>
     ),
   },
@@ -129,7 +128,7 @@ const faqItems = [
     content: (
       <div>
         This indicates what you think the average age of all the neurons on the Network Nervous System will be. The age
-        of a neuron is determined by how long it exists and wether it has triggered its dissolve delay yet. If the
+        of a neuron is determined by how long it exists and whether it has triggered its dissolve delay yet. If the
         average neuron age is higher then your own neurons you will get relatively less rewards and if your neuron has a
         higher age you will earn more.
       </div>
@@ -140,8 +139,7 @@ const faqItems = [
     content: (
       <div>
         This indicates what you think the average dissolve delay of all the neurons on the Network Nervous System will
-        be. The dissolve delay determines the The amount of time you have to wait before you get your ICP back once you
-        start dissolving your neuron. Neurons with a higher dissolve delay wil earn more rewards. s
+        start dissolving your neuron. Neurons with a higher dissolve delay will earn more rewards.
       </div>
     ),
   },
