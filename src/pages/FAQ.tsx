@@ -49,11 +49,12 @@ const faqItems = [
     title: "What is de network nervous system?",
     content: (
       <div>
-        The Network Nervous System (NNS) is the governance protocol that governs the dfinity network. Participants can
-        vote on proposals surrounding the dfinity network by staking the ICP token. To learn more visit &nbsp;
+        The Network Nervous System (NNS) is the governance protocol that governs the Internet Computer network. Participants can
+        earn rewards by staking their ICP tokens and voting on proposals that make improvements to the network. To learn more visit &nbsp;
         <a className="text-blue no-underline hover:underline" href="https://dfinity.org/faq">
-          the official dfinity site
+          the official DFINITY site
         </a>
+        .
       </div>
     ),
   },
@@ -71,7 +72,7 @@ const faqItems = [
     title: "Are the returns given by the staking calculator guaranteed?",
     content: (
       <div>
-        No, there are multiple unknown factors like: the total number of tokens that will be staked, the average
+        No, there are multiple unknown factors including the total number of tokens that will be staked, the average
         maturity level of the neurons, and the total supply of ICP. You can play around with these factors in the
         advanced settings.
       </div>
@@ -99,8 +100,10 @@ const faqItems = [
     title: "What is the staking period input field",
     content: (
       <div>
-        The staking period is the total amount of time you want to lock your tokens. During this time you can't get them
-        back. The dissolve delay is automatically set the the highest value possible, meaning that for any staking period
+        The staking period is the total amount of time you want to lock your tokens. The Network Nervous System sets this lock as 
+        a dissolve delay on your neuron, which determines how long its owner must wait to dissolve a neuron and withdraw the locked 
+        ICP tokens within.<br />
+        The dissolve delay on the calculator is automatically set the the highest value possible, meaning that for any staking period
         above 8 years the dissolve delay will be 8 and for lower staking periods the dissolve delay will be the same as
         the staking period.
       </div>
@@ -108,18 +111,18 @@ const faqItems = [
   },
   {
     title: "What does the % locked inside voting neurons advanced setting mean?",
-    content: <div>This is the percentage of the total supply of tokens that is locked inside voting neurons.</div>,
-  },
-  {
-    title: "What does the % locked inside voting neurons advanced setting mean?",
-    content: <div>This is the percentage of the total supply of tokens that is locked inside voting neurons.</div>,
+    content: <div>
+      This is the percentage of the total supply of tokens on the network that are locked inside voting neurons. 
+      The more ICP locked inside neurons the less reward every neuron gets.
+    </div>,
   },
   {
     title: "What does the % of proposals you vote on advanced setting mean?",
     content: (
       <div>
-        This indicates what percentage of the proposals submitted to the Network Nervous System you vote on. This will impact your 
+        This indicates what percentage of all proposals submitted to the Network Nervous System you vote on. This will impact your 
         rewards in a linear way, meaning that if you vote on 90% of proposals you get 90% of your total possible reward.
+        Note that a neuron can be configured to vote automatically by "following" other neurons. 
       </div>
     ),
   },
@@ -139,7 +142,9 @@ const faqItems = [
     content: (
       <div>
         This indicates what you think the average dissolve delay of all the neurons on the Network Nervous System will
-        start dissolving your neuron. Neurons with a higher dissolve delay will earn more rewards.
+        be. The dissolve delay of a neuron determines how long its owner must wait after choosing to dissolve a neuron before the 
+        locked ICP tokens can be withdrawn. Neurons with a higher dissolve delay earn greater rewards.
+        The dissolve delay of a neuron can be set up to a maximum of 8 years.
       </div>
     ),
   },
