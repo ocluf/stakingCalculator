@@ -46,7 +46,7 @@ const FAQ = () => {
 
 const faqItems = [
   {
-    title: "What is de network nervous system?",
+    title: "What is the network nervous system?",
     content: (
       <div>
         The Network Nervous System (NNS) is the governance protocol that governs the dfinity network. Participants can
@@ -81,7 +81,7 @@ const faqItems = [
     title: "What is the stake size input field?",
     content: (
       <div>
-        The stake size input fields is the number of ICP that you lock into a neuron. The more you lock in the more
+        The stake size input field is the number of ICP that you lock into a neuron. The more you lock in the more
         voting power you have.
       </div>
     ),
@@ -91,7 +91,7 @@ const faqItems = [
     content: (
       <div>
         The starting date input field is the date you lock your ICP into a neuron. The closer that this date is to
-        genesis the more reward you will get initialy.
+        genesis the more reward you will get in the first 8 years.
       </div>
     ),
   },
@@ -100,32 +100,33 @@ const faqItems = [
     content: (
       <div>
         The staking period is the total amount of time you want to lock your tokens. During this time you can't get them
-        back The dissolve delay is automatically set the the highest value possible, meaning that for any staking period
-        above 8 years the dissolve delay will be 8 and for lower staking periods the dissolve delay will be the same as
-        the staking period.
+        back The dissolve delay is automatically set to the highest value possible, meaning that for any staking period
+        above 8 years the dissolve delay will be 8 years and for lower staking periods the dissolve delay will be the
+        equal to the staking period.
       </div>
     ),
   },
   {
-    title: "What does the % locked inside voting neurons advanced setting mean?",
-    content: <div>This is the percentage of the total supply of tokens that is locked inside voting neurons.</div>,
-  },
-  {
-    title: "What does the % locked inside voting neurons advanced setting mean?",
-    content: <div>This is the percentage of the total supply of tokens that is locked inside voting neurons.</div>,
-  },
-  {
-    title: "What does the % of proposals you vote on advanced setting mean?",
+    title: 'What does the "% locked inside voting neurons" advanced setting mean?',
     content: (
       <div>
-        This indicates how much of the proposal that come by in the Network Nervous System you vote on. This will impact
-        impact your votes in a linear way meaning that if you vote on 90% of proposals you get 90% of the reward you
-        could have had.
+        This is the percentage of the total supply of tokens that is locked inside voting neurons. The more ICP locked
+        inside neurons the less reward every neurons gets.
       </div>
     ),
   },
   {
-    title: "What does the Avg. neuron age advanced setting mean?",
+    title: 'What does the "% of proposals you vote on" advanced setting mean?',
+    content: (
+      <div>
+        This indicates how much of the proposals that come by in the Network Nervous System you vote on. This will
+        impact your votes in a linear way meaning that if you vote on 90% of proposals you get 90% of the reward you
+        could have had. So be sure to vote or set up trustworthy follow relations!
+      </div>
+    ),
+  },
+  {
+    title: 'What does the "Avg. neuron age" advanced setting mean?',
     content: (
       <div>
         This indicates what you think the average age of all the neurons on the Network Nervous System will be. The age

@@ -59,7 +59,7 @@ const Neuron = (props: { neuron: NeuronType; globalParameters: GlobalParameters;
   }
 
   return (
-    <div className="bg-white w-neuron m-5 bottom-0 rounded-lg shadow-lg">
+    <div className="bg-white mt-5 w-neuron max-w-screen bottom-0 rounded-lg shadow-lg lg:m-5 ">
       <div
         className="flex flex-row items-baseline p-4 cursor-pointer"
         onClick={() => dispatch(changeExpanded({ id: props.neuron.id }))}

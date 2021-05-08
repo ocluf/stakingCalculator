@@ -18,7 +18,7 @@ export const shareSite = (neurons: Array<NeuronType>) => {
   const shareData = {
     title: "Neuron Calculator",
     text: getShareMessage(neurons),
-    url: "https://angry-davinci-aaea5b.netlify.app/",
+    url: "https://networknervoussystem.com/",
   }
   if (typeof window !== "undefined" && window.navigator.share !== undefined) {
     try {
@@ -30,13 +30,13 @@ export const shareSite = (neurons: Array<NeuronType>) => {
 export const shareTwitter = (neurons: Array<NeuronType>) => {
   if (typeof window !== "undefined") {
     window.open(
-      `https://twitter.com/intent/tweet?text=${getShareMessage(neurons)}&url=https://angry-davinci-aaea5b.netlify.app/`
+      `https://twitter.com/intent/tweet?text=${getShareMessage(neurons)}&url=https://networknervoussystem.com/`
     )
   }
 }
 
 export const shareTelegram = (neurons: Array<NeuronType>) => {
   if (typeof window !== "undefined") {
-    window.open(`https://t.me/share/url?text=${getShareMessage(neurons)}&url=https://angry-davinci-aaea5b.netlify.app/`)
+    window.open(`https://t.me/share/url?text=${getShareMessage(neurons)}&url=https://networknervoussystem.com/`)
   }
 }

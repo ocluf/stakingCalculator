@@ -8,19 +8,19 @@ const SEO = () => {
       title="ICP Neuron Calculator"
       meta={[
         {
-          property: `twitter:card`,
+          name: `twitter:card`,
           content: `summary_large_image`,
         },
         {
-          property: `twitter:title`,
+          name: `twitter:title`,
           content: `ICP Neuron Calculator`,
         },
         {
-          property: `twitter:description`,
-          content: `A tool to calculate you neuron rewards`,
+          name: `twitter:description`,
+          content: `The Internet Computer is the world’s first blockchain that runs at web speed with unlimited capacity. Neurons are utilized to participate in network governance in exchange for ICP rewards.`,
         },
         {
-          property: `twitter:site`,
+          name: `twitter:site`,
           content: `@NNSystem`,
         },
         {
@@ -29,7 +29,7 @@ const SEO = () => {
         },
         {
           property: `twitter:image`,
-          content: `https://angry-davinci-aaea5b.netlify.app${ogImage}`,
+          content: `https://networknervoussystem.com${ogImage}`,
         },
         {
           property: `og:title`,
@@ -41,7 +41,7 @@ const SEO = () => {
         },
         {
           property: `og:image`,
-          content: `https://angry-davinci-aaea5b.netlify.app${ogImage}`, //TODO make dynamic
+          content: `https://networknervoussystem.com${ogImage}`,
         },
       ]}
     />

@@ -150,6 +150,12 @@ const DashBoard = () => {
           Actual returns may differ from these projections based on several unknown parameters, to learn more check out
           the FAQ.
         </Alert>
+        <div className="mt-4 font-medium ">
+          To learn more about staking and the Internet Computer{" "}
+          <a className="text-blue" href="https://allthingsinternetcomputer.substack.com/">
+            follow me on substack!
+          </a>{" "}
+        </div>
         {/* <a
           className="twitter-share-button"
           href="https://twitter.com/intent/tweet?text=Hello%20world"
