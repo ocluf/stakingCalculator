@@ -85,7 +85,7 @@ const ReturnStatistics = () => {
       <ReturnStatistic
         title="Assets locked"
         main={totalStake + " ICP"}
-        bottom={"$" + (totalStake * exchangeRate).toFixed(2)}
+        bottom="" //{"$" + (totalStake * exchangeRate).toFixed(2)}
       />
       <ReturnStatistic
         title="Total Period"
@@ -98,7 +98,7 @@ const ReturnStatistics = () => {
       <ReturnStatistic
         title="Total Return"
         main={totalReturn.toFixed(2) + " ICP"}
-        bottom={"$" + (totalReturn * exchangeRate).toFixed(2)}
+        bottom="" //{"$" + (totalReturn * exchangeRate).toFixed(2)}
       />
       <ReturnStatistic title="ROI" main={roiString} bottom={roiBottomString} />
     </div>

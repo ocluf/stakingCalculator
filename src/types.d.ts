@@ -4,7 +4,8 @@ export interface NeuronType {
   id: string
   stakeSize: number // unix timestamp
   startDate: number // unix timestamp
-  lockupPeriod: number // number of years
+  lockupPeriod: number // number of months
+  dissolveDelay: number // number of months
   data: Array<Datapoint>
   checked: boolean
 }

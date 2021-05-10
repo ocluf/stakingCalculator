@@ -1,7 +1,7 @@
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { nanoid } from "nanoid"
 import { GlobalParameters, NeuronType } from "../types"
-import calculateDataPoints from "../calcdatapoints"
+import calculateDataPoints, { isNeuronValid } from "../calcdatapoints"
 
 type SliceState = {
   neurons: Array<NeuronType>
@@ -31,7 +31,8 @@ const createNeuron: Function = (globalParameters: GlobalParameters): NeuronType 
   let initialNeuron = {
     id: nanoid(),
     stakeSize: 100,
-    lockupPeriod: 5,
+    lockupPeriod: 60,
+    dissolveDelay: 24,
     startDate: getRoundedDownDate(),
     data: [],
     checked: true,
@@ -76,8 +77,10 @@ const neuronSlice = createSlice({
       state.neurons = state.neurons.map(neuron => {
         if (neuron.id === action.payload.id) {
           let newNeuron = { ...neuron, stakeSize: action.payload.number }
-          const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
-          newNeuron.data = dataPoints
+          if (isNeuronValid(newNeuron)) {
+            const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
+            newNeuron.data = dataPoints
+          }
           return newNeuron
         } else {
           return neuron
@@ -88,8 +91,10 @@ const neuronSlice = createSlice({
       state.neurons = state.neurons.map(neuron => {
         if (neuron.id === action.payload.id) {
           let newNeuron = { ...neuron, lockupPeriod: action.payload.number }
-          const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
-          newNeuron.data = dataPoints
+          if (isNeuronValid(newNeuron)) {
+            const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
+            newNeuron.data = dataPoints
+          }
           return newNeuron
         } else {
           return neuron
@@ -100,8 +105,24 @@ const neuronSlice = createSlice({
       state.neurons = state.neurons.map(neuron => {
         if (neuron.id === action.payload.id) {
           let newNeuron = { ...neuron, startDate: action.payload.number }
-          const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
-          newNeuron.data = dataPoints
+          if (isNeuronValid(newNeuron)) {
+            const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
+            newNeuron.data = dataPoints
+          }
+          return newNeuron
+        } else {
+          return neuron
+        }
+      })
+    },
+    changeDissolveDelay: (state, action: PayloadAction<NeuronNumberUpdate>) => {
+      state.neurons = state.neurons.map(neuron => {
+        if (neuron.id === action.payload.id) {
+          let newNeuron = { ...neuron, dissolveDelay: action.payload.number }
+          if (isNeuronValid(newNeuron)) {
+            const dataPoints = calculateDataPoints(newNeuron, state.globalParameters)
+            newNeuron.data = dataPoints
+          }
           return newNeuron
         } else {
           return neuron
@@ -118,7 +139,11 @@ const neuronSlice = createSlice({
     changeGlobalParameters: (state, action: PayloadAction<GlobalParameters>) => {
       state.globalParameters = action.payload
       state.neurons = state.neurons.map(neuron => {
-        return { ...neuron, data: calculateDataPoints(neuron, action.payload) }
+        if (isNeuronValid(neuron)) {
+          return { ...neuron, data: calculateDataPoints(neuron, action.payload) }
+        } else {
+          return neuron
+        }
       })
     },
     changeExchangeRate: (state, action: PayloadAction<number>) => {
@@ -149,6 +174,7 @@ export const {
   deleteNeuron,
   changeStakeSize,
   changeLockupPeriod,
+  changeDissolveDelay,
   changeStartDate,
   changeExpanded,
   changeGlobalParameters,

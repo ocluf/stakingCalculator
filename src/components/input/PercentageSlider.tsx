@@ -6,20 +6,24 @@ const PercentageSlider = (props: {
   title: string
   setPerc: Function
   postfix?: string
-  valueToDisplay?: string
+  valueDisplayTransformer?: Function
   defaultValue: number
   max: number
+  optionalMax?: number
   min: number
   step: number
 }) => {
   const [value, setValue] = useState(props.percentage)
 
+  const displayValue: string = props.valueDisplayTransformer
+    ? props.valueDisplayTransformer(value)
+    : value + props.postfix
   return (
     <div>
       <div>
         <div className="flex">
           <span className="flex-1">{props.title}</span>
-          <span className="flex">{value + props.postfix}</span>
+          <span className="flex"> {displayValue}</span>
         </div>
       </div>
       <Slider
@@ -29,11 +33,14 @@ const PercentageSlider = (props: {
         max={props.max}
         step={props.step}
         value={value}
-        color="primary"
+        color={value > props.optionalMax ? "secondary" : "primary"}
         onChangeCommitted={(e, value) => props.setPerc(value)}
         onChange={(e, value) => setValue(value)}
         aria-labelledby="percentage slider"
       />
+      {value > props.optionalMax ? (
+        <div className="text-delete text-xs"> Dissolve delay can't be higher than staking period</div>
+      ) : null}
     </div>
   )
 }
