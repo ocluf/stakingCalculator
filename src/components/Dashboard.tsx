@@ -85,7 +85,7 @@ const ReturnStatistics = () => {
       <ReturnStatistic
         title="Assets locked"
         main={totalStake + " ICP"}
-        bottom={"$" + (totalStake * exchangeRate).toFixed(2)}
+        bottom="" //{"$" + (totalStake * exchangeRate).toFixed(2)}
       />
       <ReturnStatistic
         title="Total Period"
@@ -98,7 +98,7 @@ const ReturnStatistics = () => {
       <ReturnStatistic
         title="Total Return"
         main={totalReturn.toFixed(2) + " ICP"}
-        bottom={"$" + (totalReturn * exchangeRate).toFixed(2)}
+        bottom="" //{"$" + (totalReturn * exchangeRate).toFixed(2)}
       />
       <ReturnStatistic title="ROI" main={roiString} bottom={roiBottomString} />
     </div>
@@ -150,6 +150,12 @@ const DashBoard = () => {
           Actual returns may differ from these projections based on several unknown parameters, to learn more check out
           the FAQ.
         </Alert>
+        <div className="mt-4 font-medium ">
+          To learn more about staking and the Internet Computer{" "}
+          <a className="text-blue" href="https://allthingsinternetcomputer.substack.com/">
+            follow me on substack!
+          </a>{" "}
+        </div>
         {/* <a
           className="twitter-share-button"
           href="https://twitter.com/intent/tweet?text=Hello%20world"

@@ -1,16 +1,15 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import PercentageSlider from "./PercentageSlider"
-import { changeLockupPeriod } from "../../redux/store"
+import { changeDissolveDelay } from "../../redux/store"
 
-const stakePeriodInput = (props: { neuronId: string; lockupPeriod: number; dissolveDelay: number }) => {
+const DissolveDelayInput = (props: { neuronId: string; dissolveDelay: number; lockupPeriod: number }) => {
   const dispatch = useDispatch()
 
-  const setLockupPeriod = (x: number) => {
-    dispatch(changeLockupPeriod({ id: props.neuronId, number: x }))
+  const setDissolveDelay = (x: number) => {
+    dispatch(changeDissolveDelay({ id: props.neuronId, number: x }))
   }
 
-  // duplicate refactor two components into one
   const postFix = (nrOfMonths: number): string => {
     const years: number = Math.floor(nrOfMonths / 12)
     const months = nrOfMonths % 12
@@ -35,16 +34,18 @@ const stakePeriodInput = (props: { neuronId: string; lockupPeriod: number; disso
 
   return (
     <PercentageSlider
-      title={"Staking period:"}
-      percentage={props.lockupPeriod}
-      setPerc={setLockupPeriod}
+      title={"Dissolve delay:"}
+      percentage={props.dissolveDelay}
+      setPerc={setDissolveDelay}
       valueDisplayTransformer={postFix}
+      postfix={postFix(props.dissolveDelay)}
+      optionalMax={props.lockupPeriod}
       min={6}
-      max={240}
+      max={96}
       step={1}
-      defaultValue={60}
+      defaultValue={24}
     />
   )
 }
 
-export default stakePeriodInput
+export default DissolveDelayInput

@@ -4,6 +4,7 @@ interface Neuron {
   age_days: number
   locked_ICP: number
   dissolve_delay: number
+  isDissolving: boolean
 }
 
 /**
@@ -27,7 +28,12 @@ function nominal_voting_rewards_available_today(icp_supply: number, days_since_g
  * @returns the relative reward number
  */
 function get_neuron_relative_max_rewards(n: Neuron): number {
-  const effective_age = n.age_days > 1461 ? 1461 : n.age_days // max 4 yrs
+  let effective_age
+  if (n.isDissolving) {
+    effective_age = 0
+  } else {
+    effective_age = n.age_days > 1461 ? 1461 : n.age_days // max 4 yrs
+  }
 
   return (n.locked_ICP + (n.locked_ICP * n.dissolve_delay) / 2922) * (1 + (0.25 * effective_age) / 1461)
 }
@@ -85,6 +91,20 @@ const daysSinceGenesis = (timestamp: number) => {
 }
 
 /**
+ * Gets the nr of days in the stake period
+ * @param startDate the lockup date
+ * @param nrOfMonths the stakePeriod in number of months
+ * @returns
+ */
+const getStakePeriodDays = (startDate: number, nrOfMonths: number): number => {
+  const stakeDate: Date = new Date(startDate)
+  const endDate: Date = new Date(stakeDate)
+  endDate.setMonth(endDate.getMonth() + nrOfMonths)
+  const diff: number = Math.abs(stakeDate.getTime() - endDate.getTime())
+  return Math.ceil(diff / dayMs)
+}
+
+/**
  * Calculates the earned stake from a neuron over time
  * @param neuron The neuron for which to calculate the rewards
  * @param globalParameters The assumptions over the network/other neurons
@@ -99,20 +119,20 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
 
   const daysPastGenesis = daysSinceGenesis(neuron.startDate)
   let totalMaturity = 0
-  const totalLockupPeriodDays = neuron.lockupPeriod * 365
-  let daysRemaining = neuron.lockupPeriod * 365
+  const totalLockupPeriodDays = getStakePeriodDays(neuron.startDate, neuron.lockupPeriod)
+  let daysRemaining = getStakePeriodDays(neuron.startDate, neuron.lockupPeriod)
 
   for (let i = 0; i < totalLockupPeriodDays; i++) {
     const currentDayPastGenesis = daysPastGenesis + i
-    //dissolve delay is automatically determined based on lockupPeriod e.g 10 year lockupPeriod gives dissolve delay of 8 years triggered after 2 years.
-    //a lockup period of 5 years gives a dissolve delay of 5 years triggered immediatly. Might add dissolve delay as seperate input later but for now keeping it simple.
-    let currentDissolveDelay = Math.min(daysRemaining, 2922)
+
+    let currentDissolveDelay = Math.min(daysRemaining, Math.ceil(neuron.dissolveDelay * 30.5))
     const averageMaturity = Math.min(globalParameters.averageMaturityLevel * 365, currentDayPastGenesis)
 
     const myNeuron: Neuron = {
       age_days: i,
       locked_ICP: neuron.stakeSize,
       dissolve_delay: currentDissolveDelay,
+      isDissolving: currentDissolveDelay < neuron.dissolveDelay,
     }
 
     // assuming one big neuron with all the other tokens
@@ -121,6 +141,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
         age_days: averageMaturity,
         locked_ICP: globalParameters.totalSupply * (globalParameters.stakedPerc / 100) - neuron.stakeSize,
         dissolve_delay: globalParameters.averageDissolveDelay * 365,
+        isDissolving: false,
       },
     ]
 
@@ -160,9 +181,19 @@ const getLowestCheckedStartDate = (neurons: Array<NeuronType>): number =>
     return neuron.checked ? Math.min(acc, neuron.startDate) : acc
   }, Infinity)
 
+export const isNeuronValid = (neuron: NeuronType) => {
+  return neuron.dissolveDelay <= neuron.lockupPeriod
+}
+
+export const allNeuronsValid = (neurons: Array<NeuronType>) => {
+  return neurons.every(neuron => isNeuronValid(neuron))
+}
+
 export const getHighestCheckedEndDate = (neurons: Array<NeuronType>): number =>
   neurons.reduce((acc, neuron) => {
-    return neuron.checked ? Math.max(acc, neuron.startDate + neuron.lockupPeriod * yearMs) : acc
+    return neuron.checked
+      ? Math.max(acc, neuron.startDate + getStakePeriodDays(neuron.startDate, neuron.lockupPeriod) * dayMs)
+      : acc
   }, 0)
 
 export const getTotalCheckedStake = (neurons: Array<NeuronType>): number =>

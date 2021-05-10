@@ -12,6 +12,9 @@ module.exports = {
         dashboard: "760px",
         chart: "712px"
       },
+      maxHeight: {
+        'super': '999999px'
+      },
       height: {
         bottombar: '56px',
         chart: "300px"
@@ -41,7 +44,7 @@ module.exports = {
         "orange": "#FCB13B"
       },
       width: {
-        "neuron": "366px"
+        "neuron": "355px"
       }
     },
   },
