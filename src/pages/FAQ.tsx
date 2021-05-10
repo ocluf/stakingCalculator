@@ -49,11 +49,13 @@ const faqItems = [
     title: "What is the network nervous system?",
     content: (
       <div>
-        The Network Nervous System (NNS) is the governance protocol that governs the dfinity network. Participants can
-        vote on proposals surrounding the dfinity network by staking the ICP token. To learn more visit &nbsp;
+        The Network Nervous System (NNS) is the governance protocol that governs the Internet Computer network.
+        Participants can earn rewards by staking their ICP tokens and voting on proposals that make improvements to the
+        network. To learn more visit &nbsp;
         <a className="text-blue no-underline hover:underline" href="https://dfinity.org/faq">
-          the official dfinity site
+          the official DFINITY site
         </a>
+        .
       </div>
     ),
   },
@@ -68,10 +70,10 @@ const faqItems = [
     ),
   },
   {
-    title: "Are the returns given by the staking calculator garantueed?",
+    title: "Are the returns given by the staking calculator guaranteed?",
     content: (
       <div>
-        No, there are multiple unknown factors like: the total number of tokens that will be staked, the average
+        No, there are multiple unknown factors including the total number of tokens that will be staked, the average
         maturity level of the neurons, and the total supply of ICP. You can play around with these factors in the
         advanced settings.
       </div>
@@ -90,28 +92,37 @@ const faqItems = [
     title: "What is the starting date input field?",
     content: (
       <div>
-        The starting date input field is the date you lock your ICP into a neuron. The closer that this date is to
-        genesis the more reward you will get in the first 8 years.
+        The starting date input field is the date you lock your ICP in a neuron. The closer this date is to genesis the
+        higher the reward you will initially receive.
       </div>
     ),
   },
   {
-    title: "What is the Staking period input fields",
+    title: "What is the staking period input field",
     content: (
       <div>
-        The staking period is the total amount of time you want to lock your tokens. During this time you can't get them
-        back The dissolve delay is automatically set to the highest value possible, meaning that for any staking period
-        above 8 years the dissolve delay will be 8 years and for lower staking periods the dissolve delay will be the
-        equal to the staking period.
+        This is the period for which you want to stake your ICP. It determines when you put your neuron into dissolving
+        mode. For instance If you have a stake period of 3 years and a dissolve delay of 1 year then the calculator will
+        start dissolving your neuron after 2 years making your total stake period 3 year.
       </div>
     ),
   },
   {
-    title: 'What does the "% locked inside voting neurons" advanced setting mean?',
+    title: "What is the dissolve delay input field?",
     content: (
       <div>
-        This is the percentage of the total supply of tokens that is locked inside voting neurons. The more ICP locked
-        inside neurons the less reward every neurons gets.
+        {" "}
+        The dissolve delay input field sets the dissolveDelay parameter of your neuron. This is the amount of time you
+        have to wait before you can access your ICP again once you have triggerd the dissolving of your neuron.
+      </div>
+    ),
+  },
+  {
+    title: "What does the % locked inside voting neurons advanced setting mean?",
+    content: (
+      <div>
+        This is the percentage of the total supply of tokens on the network that are locked inside voting neurons. The
+        more ICP locked inside neurons the less reward every neuron gets.
       </div>
     ),
   },
@@ -119,9 +130,9 @@ const faqItems = [
     title: 'What does the "% of proposals you vote on" advanced setting mean?',
     content: (
       <div>
-        This indicates how much of the proposals that come by in the Network Nervous System you vote on. This will
-        impact your votes in a linear way meaning that if you vote on 90% of proposals you get 90% of the reward you
-        could have had. So be sure to vote or set up trustworthy follow relations!
+        This indicates what percentage of all proposals submitted to the Network Nervous System you vote on. This will
+        impact your rewards in a linear way, meaning that if you vote on 90% of proposals you get 90% of your total
+        possible reward. Note that a neuron can be configured to vote automatically by "following" other neurons.
       </div>
     ),
   },
@@ -130,7 +141,7 @@ const faqItems = [
     content: (
       <div>
         This indicates what you think the average age of all the neurons on the Network Nervous System will be. The age
-        of a neuron is determined by how long it exists and wether it has triggered its dissolve delay yet. If the
+        of a neuron is determined by how long it exists and whether it has triggered its dissolve delay yet. If the
         average neuron age is higher then your own neurons you will get relatively less rewards and if your neuron has a
         higher age you will earn more.
       </div>
@@ -141,8 +152,9 @@ const faqItems = [
     content: (
       <div>
         This indicates what you think the average dissolve delay of all the neurons on the Network Nervous System will
-        be. The dissolve delay determines the The amount of time you have to wait before you get your ICP back once you
-        start dissolving your neuron. Neurons with a higher dissolve delay wil earn more rewards. s
+        be. The dissolve delay of a neuron determines how long its owner must wait after choosing to dissolve a neuron
+        before the locked ICP tokens can be withdrawn. Neurons with a higher dissolve delay earn greater rewards. The
+        dissolve delay of a neuron can be set up to a maximum of 8 years.
       </div>
     ),
   },
