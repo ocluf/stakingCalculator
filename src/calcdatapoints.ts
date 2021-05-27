@@ -126,7 +126,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
     const currentDayPastGenesis = daysPastGenesis + i
 
     let currentDissolveDelay = Math.min(daysRemaining, Math.ceil(neuron.dissolveDelay * 30.5))
-    const averageMaturity = Math.min(globalParameters.averageAge * 365, currentDayPastGenesis)
+    const averageAge = Math.min(globalParameters.averageAge * 365, currentDayPastGenesis)
 
     const myNeuron: Neuron = {
       age_days: i,
@@ -139,7 +139,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
     const allNeurons: Array<Neuron> = [
       myNeuron,
       {
-        age_days: averageMaturity,
+        age_days: averageAge,
         locked_ICP: globalParameters.totalSupply * (globalParameters.stakedPerc / 100) - neuron.stakeSize,
         dissolve_delay: globalParameters.averageDissolveDelay * 365,
         isDissolving: false,
