@@ -112,27 +112,27 @@ const getStakePeriodDays = (startDate: number, nrOfMonths: number): number => {
  */
 const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters) => {
   const datapoints = []
-  let earnedStake = 0
+  let stakeEarnedSoFar = 0
   if (isNaN(neuron.stakeSize)) {
     return [{ x: "year 0", y: 0 }]
   }
 
+  let maturity = 0
   const daysPastGenesis = daysSinceGenesis(neuron.startDate)
-  let totalMaturity = 0
   const totalLockupPeriodDays = getStakePeriodDays(neuron.startDate, neuron.lockupPeriod)
   let daysRemaining = getStakePeriodDays(neuron.startDate, neuron.lockupPeriod)
 
   for (let i = 0; i < totalLockupPeriodDays; i++) {
     const currentDayPastGenesis = daysPastGenesis + i
 
-    let currentDissolveDelay = Math.min(daysRemaining, Math.ceil(neuron.dissolveDelay * 30.5))
+    let dissolveDelay = Math.min(daysRemaining, Math.ceil(neuron.dissolveDelay * 30.5))
     const averageAge = Math.min(globalParameters.averageAge * 365, currentDayPastGenesis)
 
     const myNeuron: Neuron = {
       age_days: i,
       locked_ICP: neuron.stakeSize,
-      dissolve_delay: currentDissolveDelay,
-      isDissolving: currentDissolveDelay < neuron.dissolveDelay * 30.5,
+      dissolve_delay: dissolveDelay,
+      isDissolving: dissolveDelay < neuron.dissolveDelay * 30.5,
     }
 
     // assuming one big neuron with all the other tokens
@@ -148,7 +148,7 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
 
     let maturityIncrease
     // can't vote when dissolve delay <= 182 so also can't earn rewards
-    if (currentDissolveDelay > 182) {
+    if (dissolveDelay > 182) {
       maturityIncrease = get_neuron_maturity_increase(
         myNeuron,
         globalParameters.votingPerc / 100,
@@ -160,16 +160,16 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
       maturityIncrease = 0
     }
 
-    totalMaturity += maturityIncrease
+    maturity += maturityIncrease
     daysRemaining--
 
     if (i % 364 === 0) {
-      const y = totalMaturity * neuron.stakeSize - earnedStake //add stake earned past year
+      const stakeThisYear = maturity * neuron.stakeSize - stakeEarnedSoFar //add stake earned past year
       datapoints.push({
         x: neuron.startDate + i * dayMs,
-        y: y,
+        y: stakeThisYear,
       })
-      earnedStake += y
+      stakeEarnedSoFar += stakeThisYear
     }
   }
   return datapoints
