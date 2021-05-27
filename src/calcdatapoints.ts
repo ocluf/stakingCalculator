@@ -32,7 +32,7 @@ function get_neuron_relative_max_rewards(n: Neuron): number {
   if (n.isDissolving) {
     effective_age = 0
   } else {
-    effective_age = n.age_days > 1461 ? 1461 : n.age_days // max 4 yrs
+    effective_age = Math.min(1461, n.age_days) // max 4 yrs
   }
 
   return (n.locked_ICP + (n.locked_ICP * n.dissolve_delay) / 2922) * (1 + (0.25 * effective_age) / 1461)
@@ -64,7 +64,7 @@ function get_sum_all_neuron_relative_max_rewards(neurons: [Neuron]): number {
 function get_neuron_maturity_increase(
   neuron: Neuron,
   vote_participation: number,
-  all_neurons: [Neuron],
+  all_neurons: Array<Neuron>,
   icp_supply: number,
   days_since_genesis: number
 ): number {
@@ -126,17 +126,18 @@ const createDataPoints = (neuron: NeuronType, globalParameters: GlobalParameters
     const currentDayPastGenesis = daysPastGenesis + i
 
     let currentDissolveDelay = Math.min(daysRemaining, Math.ceil(neuron.dissolveDelay * 30.5))
-    const averageMaturity = Math.min(globalParameters.averageMaturityLevel * 365, currentDayPastGenesis)
+    const averageMaturity = Math.min(globalParameters.averageAge * 365, currentDayPastGenesis)
 
     const myNeuron: Neuron = {
       age_days: i,
       locked_ICP: neuron.stakeSize,
       dissolve_delay: currentDissolveDelay,
-      isDissolving: currentDissolveDelay < neuron.dissolveDelay,
+      isDissolving: currentDissolveDelay < neuron.dissolveDelay * 30.5,
     }
 
     // assuming one big neuron with all the other tokens
-    const allNeurons: [Neuron] = [
+    const allNeurons: Array<Neuron> = [
+      myNeuron,
       {
         age_days: averageMaturity,
         locked_ICP: globalParameters.totalSupply * (globalParameters.stakedPerc / 100) - neuron.stakeSize,

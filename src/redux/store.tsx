@@ -11,7 +11,7 @@ type SliceState = {
   exchangeRate: number
 }
 const initialGlobalParamaters: GlobalParameters = {
-  stakedPerc: 90,
+  stakedPerc: 50,
   votingPerc: 100,
   averageDissolveDelay: 2,
   totalSupply: 476190476,

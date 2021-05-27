@@ -22,7 +22,7 @@ export interface Bucket {
 }
 export interface GlobalParameters {
   stakedPerc: number
-  averageMaturityLevel: number // years
+  averageAge: number // years
   votingPerc: number // perc of proposals you vote on yourself
   averageDissolveDelay: number // years
   totalSupply: number

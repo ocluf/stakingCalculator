@@ -7,13 +7,13 @@ const StakeSizeInput = (props: { neuronId: string; stakeSize: number }) => {
   const [value, setValue] = useState<string>(props.stakeSize.toString())
   const dispatch = useDispatch()
   const parsedStakeSize = parseFloat(value.replace(/,/g, ""))
-  const isValid = !isNaN(parsedStakeSize) && parsedStakeSize >= 10
+  const isValid = !isNaN(parsedStakeSize) && parsedStakeSize >= 1
   let helperText = ""
   if (!isValid) {
     if (isNaN(parsedStakeSize)) {
       helperText = "invalid input"
     } else {
-      helperText = "minimum of 10 ICP"
+      helperText = "minimum of 1 ICP"
     }
   }
 

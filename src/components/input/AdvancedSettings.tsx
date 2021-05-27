@@ -47,7 +47,7 @@ const AdvancedSettings = () => {
               <div className="bg-white inset-0">
                 <div className="bg-white rounded-lg flex w-full p-4"></div>
                 <div className="flex flex-col w-full space-y-4 pb-4">
-                  <ExchangeRateInput exchangeRate={exchangeRate}></ExchangeRateInput>
+                  {/* <ExchangeRateInput exchangeRate={exchangeRate}></ExchangeRateInput> */}
                   <StateLessPercentageSlider
                     title="% locked inside voting neurons"
                     value={newGlobalParameters.stakedPerc}
