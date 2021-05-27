@@ -70,11 +70,9 @@ const AdvancedSettings = () => {
                   />
                   <StateLessPercentageSlider
                     title={"Avg. neuron age"}
-                    value={newGlobalParameters.averageMaturityLevel}
-                    onChange={(x: number) =>
-                      setNewGlobalParameters({ ...newGlobalParameters, averageMaturityLevel: x })
-                    }
-                    postfix={newGlobalParameters.averageMaturityLevel > 1 ? " years" : " year"}
+                    value={newGlobalParameters.averageAge}
+                    onChange={(x: number) => setNewGlobalParameters({ ...newGlobalParameters, averageAge: x })}
+                    postfix={newGlobalParameters.averageAge > 1 ? " years" : " year"}
                     min={0}
                     max={4}
                     step={0.1}

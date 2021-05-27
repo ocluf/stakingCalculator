@@ -15,7 +15,7 @@ const initialGlobalParamaters: GlobalParameters = {
   votingPerc: 100,
   averageDissolveDelay: 2,
   totalSupply: 476190476,
-  averageMaturityLevel: 2,
+  averageAge: 2,
 }
 
 const getRoundedDownDate = () => {
